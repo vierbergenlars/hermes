@@ -1,0 +1,3 @@
+app.name: Hermes
+auth.logout: Logout
+auth.login: Login

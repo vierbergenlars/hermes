@@ -1,0 +1,29 @@
+sensio_framework_extra:
+    view: { annotations: false }
+
+fos_rest:
+    disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    view:
+        view_response_listener: force
+        formats:
+            xml:  true
+            json: true
+        templating_formats:
+            html: true
+    format_listener:
+        rules:
+            - { path: ^/api, priorities: [ json, xml ], fallback_format: json, prefer_extension: true }
+            - { path: ^/, priorities: [ html, json, xml ], fallback_format: html, prefer_extension: true }
+    allowed_methods_listener: true
+    access_denied_listener:
+        json: true
+        xml: true
+    body_listener: false
+
+jms_serializer:
+    metadata:
+        directories:
+            Knp:
+                namespace_prefix: "Knp"
+                path: "%kernel.root_dir%/Resources/serializer/Knp"

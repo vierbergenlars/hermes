@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hermes, an HTTP-based templated mail sender for transactional and mass mailing.
+  ~
+  ~ Copyright (C) 2016  Lars Vierbergen
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<serializer>
+    <class name="Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination" exclusion-policy="ALL" xmlns:h="https://github.com/willdurand/Hateoas">
+        <h:relation rel="prev">
+            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() - 1})))" />
+            <h:exclusion groups="list" exclude-if="expr(object.getCurrentPageNumber() &lt;= 1)" />
+        </h:relation>
+        <h:relation rel="next">
+            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() + 1})))" />
+            <h:exclusion groups="list" exclude-if="expr(object.getCurrentPageNumber()*object.getItemNumberPerPage() &gt;= object.getTotalItemCount())" />
+        </h:relation>
+    </class>
+</serializer>

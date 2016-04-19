@@ -1,0 +1,28 @@
+# Assetic Configuration
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: false
+    bundles:        [ AppBundle ]
+    assets:
+        flag_en:
+            inputs: "../vendor/t1st3/famfamfam-flags/dist/png/us.png"
+            output: "images/flag-en.png"
+        flag_nl:
+            inputs: "../vendor/t1st3/famfamfam-flags/dist/png/nl.png"
+            output: "images/flag-nl.png"
+    filters:
+        cssrewrite: ~
+        less:
+            node_paths: [ '%kernel.root_dir%/../node_modules' ]
+
+braincrafted_bootstrap:
+    jquery_path: '%kernel.root_dir%/../vendor/components/jquery/jquery.min.js'
+    icon_prefix: fa
+    customize:
+        variables_file: '%kernel.root_dir%/Resources/less/variables.less'
+    auto_configure:
+        knp_menu: false
+
+knp_menu:
+    twig:
+        template: "AppBundle:Menu:bootstrap.html.twig"

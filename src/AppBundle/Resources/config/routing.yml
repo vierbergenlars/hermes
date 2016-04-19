@@ -1,0 +1,7 @@
+admin:
+    resource: routing/admin.yml
+    type: rest
+    prefix: /admin
+
+home:
+    path: /

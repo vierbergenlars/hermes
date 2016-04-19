@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Hermes, an HTTP-based templated mail sender for transactional and mass mailing.
+  ~
+  ~ Copyright (C) 2016  Lars Vierbergen
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="AppBundle\Menu\MainMenu">
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="knp_menu.factory" />
+            <tag name="knp_menu.menu" alias="main" />
+        </service>
+        <service class="AppBundle\EventListener\CloneViewAnnotationListener">
+            <tag name="kernel.event_subscriber" />
+        </service>
+    </services>
+</container>

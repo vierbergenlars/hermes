@@ -1,0 +1,9 @@
+{% extends 'TwigBundle:Exception:error.html.twig' %}
+{% block error_icon %}
+  <i class="fa fa-file fa-stack-2x"></i>
+  <i class="fa fa-times-circle text-danger fa-stack-1x"></i>
+{% endblock %}
+{% block error_title %}{{ 'app.error.404.title'|trans }}{% endblock %}
+{% block error_description %}
+  <p>{{ 'app.error.404.description'|trans }}</p>
+{% endblock %}
