@@ -1,0 +1,11 @@
+form.submit: Verzenden
+admin.actions: Acties
+admin.items_per_page: 'Items per pagina'
+
+# Navigation
+admin.navigation.title: Navigatie
+admin.navigation.view: Bekijk
+admin.navigation.edit: Bewerk
+admin.navigation.delete: Verwijder
+admin.navigation.list: Lijst
+admin.navigation.new: Nieuw

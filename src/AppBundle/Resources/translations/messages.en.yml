@@ -1,0 +1,30 @@
+form.submit: Submit
+admin.actions: Actions
+admin.items_per_page: 'Items per page'
+app.menu.apiusers: '.icon-key API Users'
+
+# Api users
+admin.user.name: Name
+admin.user.delete: Delete
+admin.user.list.title: API users
+admin.user.edit.title: 'Edit API user %name%'
+admin.user.view.title: 'API User %name%'
+admin.user.new.title: 'Create API User'
+admin.user.delete.title: 'Delete API User %name%'
+admin.user.title: API Users
+
+label.username: 'Username'
+label.password: 'Password'
+label.rotate_key: 'Rotate key'
+
+
+# Navigation
+admin.navigation.title: Navigation
+admin.navigation.view: View
+admin.navigation.edit: Edit
+admin.navigation.delete: Delete
+admin.navigation.list: List
+admin.navigation.new: Create
+
+
+

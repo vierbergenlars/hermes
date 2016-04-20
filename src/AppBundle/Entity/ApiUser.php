@@ -21,30 +21,61 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use vierbergenlars\Bundle\AuthClientBundle\Entity\User as AUser;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="user_type", type="string")
- * @ORM\DiscriminatorMap({"user"="User", "api"="ApiUser"})
- * @ORM\Table(name="app_user")
  */
-class User extends AUser
+class ApiUser extends User
 {
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @var string
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
      */
-    private $id;
+    private $password;
 
     /**
-     * @return mixed
+     * @var string
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Regex("/^[a-z0-9-]+$/")
      */
-    public function getId()
+    protected $username;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->updatePassword();
     }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    public function getRoles()
+    {
+        return [
+            'ROLE_API'
+        ];
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function updatePassword()
+    {
+        $this->password = base_convert(bin2hex(openssl_random_pseudo_bytes(32)), 16, 36);
+    }
+
 }

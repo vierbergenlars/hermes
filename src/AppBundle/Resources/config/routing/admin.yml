@@ -1,0 +1,4 @@
+admin_apiuser:
+    resource: '@AppBundle/Controller/Admin/ApiUserController.php'
+    name_prefix: admin_
+    type: rest

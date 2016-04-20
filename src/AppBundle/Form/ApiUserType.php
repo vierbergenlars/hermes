@@ -18,33 +18,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AppBundle\Entity;
+namespace AppBundle\Form;
 
-use Doctrine\ORM\Mapping as ORM;
-use vierbergenlars\Bundle\AuthClientBundle\Entity\User as AUser;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-
-/**
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="user_type", type="string")
- * @ORM\DiscriminatorMap({"user"="User", "api"="ApiUser"})
- * @ORM\Table(name="app_user")
- */
-class User extends AUser
+class ApiUserType extends AbstractType
 {
     /**
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
-    private $id;
-
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        return $this->id;
+        $builder
+            ->add('username')
+            ->add('submit', SubmitType::class, [
+                'label' => 'form.submit'
+            ])
+        ;
+    }
+    
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'AppBundle\Entity\ApiUser'
+        ));
     }
 }

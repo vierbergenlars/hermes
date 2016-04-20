@@ -1,0 +1,17 @@
+{% extends 'AppBundle:Admin/ApiUser:skeleton.html.twig' %}
+{% block title %}{{ 'admin.user.view.title'|trans({'%name%': user.username}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('list-alt') }} {{ 'admin.user.view.title'|trans({'%name%': user.username}) }}</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.username'|trans }}</dt><dd>{{ user.username }}</dd>
+            <dt>{{ 'label.password'|trans }}</dt><dd>
+                {{ user.password }}
+                {{ render(controller('AppBundle:Admin/ApiUser:rotateForm', {user: user.id})) }}
+            </dd>
+        </dl>
+
+    </div>
+{% endblock %}
