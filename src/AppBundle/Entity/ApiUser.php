@@ -77,5 +77,4 @@ class ApiUser extends User
     {
         $this->password = base_convert(bin2hex(openssl_random_pseudo_bytes(32)), 16, 36);
     }
-
 }

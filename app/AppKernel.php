@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new vierbergenlars\Bundle\AuthClientBundle\VlAuthClientBundle(),
 
             new AppBundle\AppBundle(),
+            new vierbergenlars\Bundle\AclBundle\VlAclBundle\VlAclBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

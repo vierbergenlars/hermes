@@ -1,0 +1,76 @@
+{% macro ace_row(ace, type, data, request, masks) %}
+    <tr>
+        <td>{{ ace.securityIdentity }}</td>
+        <td>{{ ('acl.label.type.'~type)|trans }}</td>
+        {% for mask, value in masks %}
+            <td>
+                {% if doesAceGrantPermission(ace, mask) %}
+                    <span class="text-success">{{ icon('check-square fa-fw') }}</span>
+                {% endif %}
+            </td>
+        {% endfor %}
+        {% if is_granted('MASTER', data.objectIdentity) %}
+            <td>
+                <a href="{{ url('vl_acl_edit_acl_ace', {
+                    'object_class': data.objectIdentity.type,
+                    'object_id': data.objectIdentity.identifier,
+                    'ace_type': type,
+                    'ace_id': ace.id,
+                    'target_route': request.attributes.get('_route'),
+                    'target_route_params': request.attributes.get('_route_params', {})|merge(request.query.all),
+                }) }}" class="btn btn-default">{{ icon('pencil-square-o fa-fw') }}<span class="sr-only">{{ 'admin.navigation.edit'|trans }}</span></a>
+            </td>
+        {% endif %}
+    </tr>
+{% endmacro %}
+{% import _self as self %}
+<div class="table-responsive js-acl-container">
+    <table class="table">
+        <thead>
+        <tr>
+            <td>{{ 'acl.label.sid'|trans }}</td>
+            <td>{{ 'acl.label.type'|trans }}</td>
+            {% for mask in masks|keys %}
+                <td>{{ ('acl.label.type.'~mask)|trans }}</td>
+            {% endfor %}
+            {% if is_granted('MASTER', data.objectIdentity) %}
+                <td>{{ 'admin.actions'|trans }}</td>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for ace in data.classAces %}
+            {{ self.ace_row(ace, 'class', data, request, masks) }}
+        {% endfor %}
+        {% for ace in data.objectAces %}
+            {{ self.ace_row(ace, 'object', data, request, masks) }}
+        {% endfor %}
+        </tbody>
+        {% if is_granted('MASTER', data.objectIdentity) %}
+            <tfoot>
+            <tr>
+                <td colspan="{{ 3+masks|length }}">
+                    <a href="{{ url('vl_acl_new_acl_ace', {
+                        'object_class': data.objectIdentity.type,
+                        'object_id': data.objectIdentity.identifier,
+                        'target_route': request.attributes.get('_route'),
+                        'target_route_params': request.attributes.get('_route_params', {})|merge(request.query.all),
+                    }) }}" class="btn btn-default">{{ icon('plus fa-fw') }} {{ 'admin.navigation.new'|trans }}</a>
+                </td>
+            </tr>
+            </tfoot>
+        {% endif %}
+    </table>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="acl_edit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{ 'admin.acl_dialog.title'|trans }}</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

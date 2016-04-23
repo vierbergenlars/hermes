@@ -1,0 +1,54 @@
+<table>
+    <thead>
+    <tr>
+        <td>SID</td>
+        <td>Type</td>
+        {% for mask in masks|keys %}
+            <td>{{ mask }}</td>
+        {% endfor %}
+        <td>Actions</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ace in data.classAces %}
+        <tr>
+            <td>{{ ace.securityIdentity }}</td>
+            <td>Class</td>
+            {% for mask, value in masks %}
+                <td>{% if doesAceGrantPermission(ace, mask) %}X{% endif %}</td>
+            {% endfor %}
+            <td> <a href="{{ url('vl_acl_edit_acl_ace', {
+                    'object_class': data.objectIdentity.type,
+                    'object_id': data.objectIdentity.identifier,
+                    'ace_type': 'class',
+                    'ace_id': ace.id,
+                    'target_route': request.attributes.get('_route'),
+                    'target_route_params': request.attributes.get('_route_params', {})|merge(request.query.all),
+                }) }}">Edit</a></td>
+        </tr>
+    {% endfor %}
+    {% for ace in data.objectAces %}
+        <tr>
+            <td>{{ ace.securityIdentity }} </td>
+            <td>Object</td>
+            {% for mask, value in masks %}
+                <td>{% if value b-and ace.mask %}X{% endif %}</td>
+            {% endfor %}
+            <td><a href="{{ url('vl_acl_edit_acl_ace', {
+                    'object_class': data.objectIdentity.type,
+                    'object_id': data.objectIdentity.identifier,
+                    'ace_type': 'object',
+                    'ace_id': ace.id,
+                    'target_route': request.attributes.get('_route'),
+                    'target_route_params': request.attributes.get('_route_params', {})|merge(request.query.all),
+                }) }}">Edit</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url('vl_acl_new_acl_ace', {
+    'object_class': data.objectIdentity.type,
+    'object_id': data.objectIdentity.identifier,
+    'target_route': request.attributes.get('_route'),
+    'target_route_params': request.attributes.get('_route_params', {})|merge(request.query.all),
+}) }}">New ACE</a>

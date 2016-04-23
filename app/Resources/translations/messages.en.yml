@@ -1,3 +1,17 @@
 app.name: Hermes
 auth.logout: Logout
 auth.login: Login
+
+acl.label.sid: SID
+acl.label.type: Type
+acl.label.type.VIEW: View
+acl.label.type.EDIT: Edit
+acl.label.type.CREATE: Create
+acl.label.type.DELETE: Delete
+acl.label.type.UNDELETE: Undelete
+acl.label.type.OPERATOR: Operator
+acl.label.type.MASTER: Master
+acl.label.type.OWNER: Owner
+acl.label.type.object: Object
+acl.label.type.class: Class
+

@@ -1,5 +1,6 @@
 form.submit: Submit
 admin.actions: Actions
+admin.acl_dialog.title: Manage ACL
 admin.items_per_page: 'Items per page'
 app.menu.apiusers: '.icon-key API Users'
 

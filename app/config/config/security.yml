@@ -2,8 +2,14 @@ security:
     encoders:
         AppBundle\Entity\ApiUser: plaintext
 
+    acl:
+        connection: default
+        voter:
+            allow_if_object_identity_unavailable: false
+
     role_hierarchy:
         ROLE_GROUP_%SYSOPS: ROLE_ADMIN
+        ROLE_GROUP_HERMES_USERS: ROLE_USER
         ROLE_ADMIN: ROLE_USER
 
 
@@ -45,5 +51,7 @@ security:
         - { path: ^/login_check, role: IS_AUTHENTICATED_FULLY }
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, role: ROLE_API }
-        - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/, role: ROLE_USER }
+
+vl_acl:
+    data_provider: app.acl_data_provider

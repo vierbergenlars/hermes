@@ -1,5 +1,5 @@
-{% macro render_link(route, param, ico, name) %}
-    <a class="list-group-item {% if app.request.attributes.get('_route') == route %} active{% endif %}" href="{{ url(route, param) }}">{{ icon(ico~' fa-fw') }} {{ name }}</a>
+{% macro render_link(route, param, ico, name, authorized) %}
+    <a class="list-group-item {% if app.request.attributes.get('_route') == route %} active{% endif %}{% if not authorized %} disabled{% endif %}" href="{{ url(route, param) }}">{{ icon(ico~' fa-fw') }} {{ name }}</a>
 {% endmacro %}
 {% import _self as self %}
 <div class="panel panel-default">
@@ -8,11 +8,11 @@
     </div>
     <div class="list-group">
         {% if user is defined %}
-            {{ self.render_link('admin_get_apiuser', {user: user.id}, 'eye', 'admin.navigation.view'|trans) }}
-            {{ self.render_link('admin_edit_apiuser', {user: user.id}, 'pencil', 'admin.navigation.edit'|trans) }}
-            {{ self.render_link('admin_remove_apiuser', {user: user.id}, 'trash', 'admin.navigation.delete'|trans) }}
+            {{ self.render_link('admin_get_apiuser', {user: user.id}, 'eye', 'admin.navigation.view'|trans, is_granted('VIEW', user)) }}
+            {{ self.render_link('admin_edit_apiuser', {user: user.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', user)) }}
+            {{ self.render_link('admin_remove_apiuser', {user: user.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', user)) }}
         {% endif %}
-        {{ self.render_link('admin_get_apiusers', {}, 'list', 'admin.navigation.list'|trans) }}
-        {{ self.render_link('admin_new_apiuser', {}, 'plus', 'admin.navigation.new'|trans) }}
+        {{ self.render_link('admin_get_apiusers', {}, 'list', 'admin.navigation.list'|trans, is_granted('ROLE_ADMIN')) }}
+        {{ self.render_link('admin_new_apiuser', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_ADMIN')) }}
     </div>
 </div>

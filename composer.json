@@ -35,6 +35,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "symfony/assetic-bundle": "^2.8",
         "symfony/monolog-bundle": "^2.8",
+        "symfony/security-acl": "^3.0",
         "symfony/swiftmailer-bundle": "^2.3",
         "symfony/symfony": "^3.0",
         "t1st3/famfamfam-flags": "^0.5.1",

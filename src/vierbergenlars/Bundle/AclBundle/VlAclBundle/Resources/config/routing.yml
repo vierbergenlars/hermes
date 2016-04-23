@@ -1,0 +1,3 @@
+vl_acl:
+    resource: '@VlAclBundle/Controller/AclController.php'
+    type: rest

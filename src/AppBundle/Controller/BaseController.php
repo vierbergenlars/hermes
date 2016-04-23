@@ -30,6 +30,14 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 abstract class BaseController extends FOSRestController
 {
     /**
+     * @return \Symfony\Component\Security\Acl\Dbal\MutableAclProvider
+     */
+    protected function getAclProvider()
+    {
+        return $this->get('security.acl.provider');
+    }
+
+    /**
      * @return EntityManager
      */
     protected function getEntityManager()
