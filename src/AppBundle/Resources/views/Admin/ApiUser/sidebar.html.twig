@@ -12,7 +12,7 @@
             {{ self.render_link('admin_edit_apiuser', {user: user.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', user)) }}
             {{ self.render_link('admin_remove_apiuser', {user: user.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', user)) }}
         {% endif %}
-        {{ self.render_link('admin_get_apiusers', {}, 'list', 'admin.navigation.list'|trans, is_granted('ROLE_ADMIN')) }}
+        {{ self.render_link('admin_get_apiusers', {}, 'list', 'admin.navigation.list'|trans, true) }}
         {{ self.render_link('admin_new_apiuser', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_ADMIN')) }}
     </div>
 </div>

@@ -103,6 +103,7 @@ class ApiUserController extends BaseController implements ClassResourceInterface
     public function putAction(Request $request, ApiUser $user)
     {
         $form = $this->editAction($user);
+        $form->handleRequest($request);
         if($form->isValid()) {
             $this->getEntityManager()->flush();
 
