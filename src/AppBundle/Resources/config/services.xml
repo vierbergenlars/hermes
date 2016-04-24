@@ -28,6 +28,9 @@
         <service class="AppBundle\EventListener\CloneViewAnnotationListener">
             <tag name="kernel.event_subscriber" />
         </service>
+        <service class="AppBundle\EventListener\ConfirmEmailAddressListener" autowire="true">
+            <tag name="doctrine.event_subscriber" />
+        </service>
         <service class="AppBundle\Security\DataProvider" id="app.acl_data_provider"/>
         <service id="security.acl.permission.map" class="AppBundle\Security\Acl\Permission\PermissionMap" public="false" />
     </services>

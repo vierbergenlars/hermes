@@ -30,6 +30,7 @@
         "jms/serializer-bundle": "^1.1",
         "knplabs/knp-menu-bundle": "^2.1",
         "knplabs/knp-paginator-bundle": "^2.5",
+        "paragonie/random_compat": "^1.0|^2.0",
         "rollbar/rollbar": "^0.15.0",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",

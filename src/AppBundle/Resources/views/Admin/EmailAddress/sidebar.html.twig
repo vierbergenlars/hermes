@@ -1,0 +1,18 @@
+{% macro render_link(route, param, ico, name, authorized) %}
+    <a class="list-group-item {% if app.request.attributes.get('_route') == route %} active{% endif %}{% if not authorized %} disabled{% endif %}" href="{{ url(route, param) }}">{{ icon(ico~' fa-fw') }} {{ name }}</a>
+{% endmacro %}
+{% import _self as self %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'admin.navigation.title'|trans }}</h3>
+    </div>
+    <div class="list-group">
+        {% if emailAddress is defined %}
+            {{ self.render_link('admin_get_emailaddress', {emailAddress: emailAddress.id}, 'eye', 'admin.navigation.view'|trans, is_granted('VIEW', emailAddress)) }}
+            {{ self.render_link('admin_edit_emailaddress', {emailAddress: emailAddress.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', emailAddress)) }}
+            {{ self.render_link('admin_remove_emailaddress', {emailAddress: emailAddress.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', emailAddress)) }}
+        {% endif %}
+        {{ self.render_link('admin_get_emailaddresses', {}, 'list', 'admin.navigation.list'|trans, true) }}
+        {{ self.render_link('admin_new_emailaddress', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_USER')) }}
+    </div>
+</div>
