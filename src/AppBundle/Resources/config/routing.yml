@@ -3,5 +3,13 @@ admin:
     type: rest
     prefix: /admin
 
+emailaddress:
+    resource: '@AppBundle/Controller/EmailAddressController.php'
+    type: rest
+
+emailtemplate:
+    resource: '@AppBundle/Controller/EmailTemplateController.php'
+    type: rest
+
 home:
     path: /

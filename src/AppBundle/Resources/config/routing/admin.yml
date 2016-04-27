@@ -3,10 +3,6 @@ admin_apiuser:
     name_prefix: admin_
     type: rest
 
-admin_emailaddress:
-    resource: '@AppBundle/Controller/Admin/EmailAddressController.php'
-    name_prefix: admin_
-    type: rest
 
 vl_acl:
     resource: "@VlAclBundle/Resources/config/routing.yml"

@@ -1,7 +1,7 @@
-{% extends 'AppBundle:Admin/EmailAddress:skeleton.html.twig' %}
+{% extends 'AppBundle:EmailAddress:skeleton.html.twig' %}
 {% block content %}
     <div class="panel-heading clearfix">
-        {% include 'AppBundle:Admin:per_page_button.html.twig' %}
+        {% include 'AppBundle::per_page_button.html.twig' %}
         <h3 class="panel-title">{{ icon('list-alt') }} {{ 'admin.emailAddress.list.title'|trans }}</h3>
     </div>
     <div class="table-responsive">
@@ -21,14 +21,14 @@
                         <td>
                             {% spaceless %}
                                 <div class="btn-group btn-group-sm">
-                                    <a class="btn btn-info {% if not is_granted('VIEW', obj) %}disabled{% endif %}" href="{{ url('admin_get_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
+                                    <a class="btn btn-info {% if not is_granted('VIEW', obj) %}disabled{% endif %}" href="{{ url('get_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
                                         {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
                                     </a>
-                                    <a class="btn btn-default {% if not is_granted('EDIT', obj) %}disabled{% endif %}" href="{{ url('admin_edit_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.edit'|trans }}">
+                                    <a class="btn btn-default {% if not is_granted('EDIT', obj) %}disabled{% endif %}" href="{{ url('edit_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.edit'|trans }}">
 
                                         {{ icon('edit') }}<span class="sr-only">{{ 'admin.navigation.edit'|trans }}</span>
                                     </a>
-                                    <a class="btn btn-danger {% if not is_granted('DELETE', obj) %}disabled{% endif %}" href="{{ url('admin_remove_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                    <a class="btn btn-danger {% if not is_granted('DELETE', obj) %}disabled{% endif %}" href="{{ url('remove_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
                                         {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
                                     </a>
                                 </div>

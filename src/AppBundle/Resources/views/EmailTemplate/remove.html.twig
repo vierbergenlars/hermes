@@ -1,0 +1,10 @@
+{% extends 'AppBundle:EmailAddress:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailAddress.delete.title'|trans({'%email%': emailAddress.email}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('list-alt') }} {{ 'admin.emailAddress.delete.title'|trans({'%email%': emailAddress.email}) }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ form(form) }}
+    </div>
+{% endblock %}

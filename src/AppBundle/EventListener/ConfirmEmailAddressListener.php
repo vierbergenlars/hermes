@@ -82,7 +82,7 @@ class ConfirmEmailAddressListener implements EventSubscriber
         if($entity instanceof EmailAddress) {
             if($entity->getAuthCode()) {
                 $domain = $this->requestStack->getMasterRequest()->getHost();
-                $confirmationUrl = $this->urlGenerator->generate('admin_confirm_emailaddress', [
+                $confirmationUrl = $this->urlGenerator->generate('confirm_emailaddress', [
                     'emailAddress' => $entity->getId(),
                     'authCode' => $entity->getAuthCode(),
                 ], UrlGeneratorInterface::ABSOLUTE_URL);

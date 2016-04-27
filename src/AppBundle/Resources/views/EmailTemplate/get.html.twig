@@ -1,0 +1,18 @@
+{% extends 'AppBundle:EmailAddress:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress.email}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('list-alt') }} {{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress.email}) }}</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.name'|trans }}</dt><dd>{{ emailAddress.name }}</dd>
+            <dt>{{ 'label.email'|trans }}</dt><dd>{{ emailAddress.email }} {% if emailAddress.verified %}{{ label_success(icon('check-circle')) }}{% endif %}</dd>
+        </dl>
+    </div>
+    {{ render(controller('VlAclBundle:Acl:get', {req: app.request, object: emailAddress})) }}
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/acl-modal.js') }}"></script>
+{% endblock %}

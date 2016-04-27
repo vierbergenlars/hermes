@@ -1,5 +1,5 @@
-{% extends 'AppBundle:Admin:skeleton.html.twig' %}
+{% extends 'AppBundle::skeleton.html.twig' %}
 {% block title %}{{ 'admin.emailAddress.title'|trans }} | {{ parent() }}{% endblock %}
 {% block sidebar %}
-    {% include 'AppBundle:Admin/EmailAddress:sidebar.html.twig' %}
+    {% include 'AppBundle:EmailAddress:sidebar.html.twig' %}
 {% endblock %}

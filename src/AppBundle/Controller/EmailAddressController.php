@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace AppBundle\Controller\Admin;
+namespace AppBundle\Controller;
 
 use AppBundle\Controller\BaseController;
 use AppBundle\Entity\EmailAddress;
@@ -63,12 +63,12 @@ class EmailAddressController extends BaseController implements ClassResourceInte
         $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->createForm(EmailAddressType::class, new EmailAddress(), [
             'method' => 'POST',
-            'action' => $this->generateUrl('admin_post_emailaddress'),
+            'action' => $this->generateUrl('post_emailaddress'),
         ]);
     }
 
     /**
-     * @View("AppBundle:Admin/EmailAddress:new.html.twig")
+     * @View("AppBundle:EmailAddress:new.html.twig")
      */
     public function postAction(Request $request)
     {
@@ -83,7 +83,7 @@ class EmailAddressController extends BaseController implements ClassResourceInte
             $acl->insertObjectAce(new RoleSecurityIdentity('ROLE_ADMIN'), MaskBuilder::MASK_OWNER);
             $this->getAclProvider()->updateAcl($acl);
 
-            return $this->redirectToRoute('admin_get_emailaddress', ['emailAddress' => $form->getData()->getId()]);
+            return $this->redirectToRoute('get_emailaddress', ['emailAddress' => $form->getData()->getId()]);
         }
         return $form;
     }
@@ -93,12 +93,12 @@ class EmailAddressController extends BaseController implements ClassResourceInte
         $this->denyAccessUnlessGranted('EDIT', $emailAddress);
         return $this->createForm(EmailAddressType::class, $emailAddress, [
             'method' => 'PUT',
-            'action' => $this->generateUrl('admin_put_emailaddress', ['emailAddress' => $emailAddress->getId()]),
+            'action' => $this->generateUrl('put_emailaddress', ['emailAddress' => $emailAddress->getId()]),
         ]);
     }
 
     /**
-     * @View("AppBundle:Admin/EmailAddress:edit.html.twig")
+     * @View("AppBundle:EmailAddress:edit.html.twig")
      */
     public function putAction(Request $request, EmailAddress $emailAddress)
     {
@@ -107,7 +107,7 @@ class EmailAddressController extends BaseController implements ClassResourceInte
         if($form->isValid()) {
             $this->getEntityManager()->flush();
 
-            return $this->redirectToRoute('admin_get_emailaddress', ['emailAddress' => $emailAddress->getId()]);
+            return $this->redirectToRoute('get_emailaddress', ['emailAddress' => $emailAddress->getId()]);
         }
         return $form;
     }
@@ -124,7 +124,7 @@ class EmailAddressController extends BaseController implements ClassResourceInte
             $this->addFlash('error', 'flash.emailAddress.confirmation.failure');
         }
         if($this->isGranted('VIEW', $emailAddress))
-            return $this->redirectToRoute('admin_get_emailaddress', ['emailAddress'=>$emailAddress->getId()]);
+            return $this->redirectToRoute('get_emailaddress', ['emailAddress'=>$emailAddress->getId()]);
         return [];
     }
 
@@ -137,12 +137,12 @@ class EmailAddressController extends BaseController implements ClassResourceInte
                 'button_class' => 'danger'
             ])
             ->setMethod('DELETE')
-            ->setAction($this->generateUrl('admin_delete_emailaddress', ['emailAddress' => $emailAddress->getId()]))
+            ->setAction($this->generateUrl('delete_emailaddress', ['emailAddress' => $emailAddress->getId()]))
             ->getForm();
     }
 
     /**
-     * @View("AppBundle:Admin/EmailAddress:remove.html.twig")
+     * @View("AppBundle:EmailAddress:remove.html.twig")
      */
     public function deleteAction(Request $request, EmailAddress $emailAddress)
     {
@@ -153,7 +153,7 @@ class EmailAddressController extends BaseController implements ClassResourceInte
             $this->getEntityManager()->remove($emailAddress);
             $this->getEntityManager()->flush();
 
-            return $this->redirectToRoute('admin_get_emailaddresses');
+            return $this->redirectToRoute('get_emailaddresses');
         }
         return $form;
     }
