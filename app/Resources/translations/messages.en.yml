@@ -5,6 +5,7 @@ auth.login: Login
 acl.label.sid: SID
 acl.label.type: Type
 acl.label.type.VIEW: View
+acl.label.type.USE: Usage
 acl.label.type.EDIT: Edit
 acl.label.type.CREATE: Create
 acl.label.type.DELETE: Delete

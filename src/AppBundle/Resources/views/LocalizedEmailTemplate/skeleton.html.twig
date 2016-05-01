@@ -1,0 +1,5 @@
+{% extends 'AppBundle::skeleton.html.twig' %}
+{% block title %}{{ 'admin.localizedEmailTemplate.title'|trans({'%name%': emailTemplate.name}) }} | {{ parent() }}{% endblock %}
+{% block sidebar %}
+    {% include 'AppBundle:LocalizedEmailTemplate:sidebar.html.twig' %}
+{% endblock %}

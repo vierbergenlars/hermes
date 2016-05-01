@@ -133,7 +133,7 @@ class EmailAddressController extends BaseController implements ClassResourceInte
         $this->denyAccessUnlessGranted('DELETE', $emailAddress);
         return $this->createFormBuilder()
             ->add('delete', SubmitType::class, [
-                'label' => 'admin.form.delete',
+                'label' => 'admin.emailAddress.delete',
                 'button_class' => 'danger'
             ])
             ->setMethod('DELETE')

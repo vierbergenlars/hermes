@@ -37,6 +37,14 @@ class MainMenu extends MenuItem
         parent::__construct('root', $factory);
 
         try {
+            $this->addChild('emailaddresses', [
+                'label' => 'app.menu.emailaddresses',
+                'route' => 'get_emailaddresses',
+            ]);
+            $this->addChild('emailtemplates', [
+                'label' => 'app.menu.emailtemplates',
+                'route' => 'get_emailtemplates',
+            ]);
             if($authorizationChecker->isGranted('ROLE_ADMIN')) {
                 $this->addChild('admin_apiusers', [
                     'label' => 'app.menu.apiusers',

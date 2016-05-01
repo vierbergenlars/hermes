@@ -3,6 +3,17 @@ admin.actions: Actions
 admin.acl_dialog.title: Manage ACL
 admin.items_per_page: 'Items per page'
 app.menu.apiusers: '.icon-key API Users'
+app.menu.emailaddresses: '.icon-envelope Email addresses'
+app.menu.emailtemplates: '.icon-files-o Email templates'
+
+# Navigation
+admin.navigation.title: Navigation
+admin.navigation.view: View
+admin.navigation.edit: Edit
+admin.navigation.delete: Delete
+admin.navigation.list: List
+admin.navigation.new: Create
+admin.navigation.back: Back
 
 # Api users
 admin.user.name: Name
@@ -19,13 +30,36 @@ label.password: 'Password'
 label.rotate_key: 'Rotate key'
 
 
-# Navigation
-admin.navigation.title: Navigation
-admin.navigation.view: View
-admin.navigation.edit: Edit
-admin.navigation.delete: Delete
-admin.navigation.list: List
-admin.navigation.new: Create
+# Email addresses
+admin.emailAddress.title: 'Email addresses'
+admin.emailAddress.list.title: 'Email addresses'
+admin.emailAddress.view.title: '%email%'
+admin.emailAddress.edit.title: 'Edit %email%'
+admin.emailAddress.new.title: 'Link email address'
+admin.emailAddress.delete.title: 'Unlink %email%'
+admin.emailAddress.delete: 'Unlink email address'
 
+label.email: 'Email address'
 
+# Email templates
+admin.emailTemplate.title: 'Email templates'
+admin.emailTemplate.list.title: 'Email templates'
+admin.emailTemplate.view.title: 'Template %name%'
+admin.emailTemplate.edit.title: 'Edit template %name%'
+admin.emailTemplate.new.title: 'Create email template'
+admin.emailTemplate.delete.title: 'Delete template %name%'
+admin.emailTemplate.delete: 'Delete email template'
 
+admin.localizedEmailTemplate.title: 'Translations | Template %name%'
+admin.localizedEmailTemplate.list.title: 'Translations of template %name%'
+admin.localizedEmailTemplate.view.title: 'Template %name% (%locale%)'
+admin.localizedEmailTemplate.edit.title: 'Edit template %name% (%locale%)'
+admin.localizedEmailTemplate.new.title: 'Create translation of template %name%'
+admin.localizedEmailTemplate.delete.title: 'Delete template %name% (%locale%)'
+admin.localizedEmailTemplate.delete: 'Delete email template translation'
+
+label.name: 'Name'
+label.templates: 'Templates'
+label.locale: 'Language'
+label.subject: 'Subject'
+label.body: 'Body'

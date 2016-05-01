@@ -149,7 +149,7 @@ class ApiUserController extends BaseController implements ClassResourceInterface
         $this->denyAccessUnlessGranted('DELETE', $user);
         return $this->createFormBuilder()
             ->add('delete', SubmitType::class, [
-                'label' => 'admin.form.delete',
+                'label' => 'admin.user.delete',
                 'button_class' => 'danger'
             ])
             ->setMethod('DELETE')

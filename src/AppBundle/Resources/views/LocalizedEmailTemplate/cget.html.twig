@@ -1,0 +1,63 @@
+{% set inline =  app.request.attributes.get('_inline_', false) %}
+{% extends inline ? 'AppBundle::skeleton_inline.html.twig': 'AppBundle:LocalizedEmailTemplate:skeleton.html.twig' %}
+{% block content %}
+    {% if not inline %}
+        <div class="panel-heading clearfix">
+            {% include 'AppBundle::per_page_button.html.twig' %}
+            <h3 class="panel-title">{{ icon('files-o') }} {{ 'admin.localizedEmailTemplate.list.title'|trans({'%name%': emailTemplate.name}) }}</h3>
+        </div>
+    {% endif %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.locale'|trans }}</th>
+                    <th>{{ 'label.subject'|trans }}</th>
+                    <th>{{ 'admin.actions'|trans }}</th>
+                    <th width="1">
+                        {% if inline %}
+                            {% include 'AppBundle::per_page_button.html.twig' %}
+                        {% endif %}
+                    </th>
+                </tr>
+            </thead>
+            {% if inline %}
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <a class="btn btn-primary" href="{{ url('new_emailtemplate_translation', {emailTemplate: emailTemplate.id}) }}">
+                                {{ icon('plus fa-fw') }} {{ 'admin.navigation.new'|trans }}
+                            </a>
+                        </td>
+                    </tr>
+                </tfoot>
+            {% endif %}
+            <tbody>
+                {% for obj in data %}
+                    <tr>
+                        <td>{{ obj.locale }}</td>
+                        <td>{{ obj.subject }}</td>
+                        <td colspan="2">
+                            {% spaceless %}
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-info {% if not is_granted('VIEW', obj.template) %}disabled{% endif %}" href="{{ url('get_emailtemplate_translation', {emailTemplate: obj.template.id, localizedEmailTemplate: obj.locale}) }}" title="{{ 'admin.navigation.view'|trans }}">
+                                        {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-default {% if not is_granted('EDIT', obj.template) %}disabled{% endif %}" href="{{ url('edit_emailtemplate_translation', {emailTemplate: obj.template.id, localizedEmailTemplate: obj.locale}) }}" title="{{ 'admin.navigation.edit'|trans }}">
+                                        {{ icon('edit') }}<span class="sr-only">{{ 'admin.navigation.edit'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-danger {% if not is_granted('DELETE', obj.template) %}disabled{% endif %}" href="{{ url('remove_emailtemplate_translation', {emailTemplate: obj.template.id, localizedEmailTemplate: obj.locale}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                        {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
+                                    </a>
+                                </div>
+                            {% endspaceless %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body text-center">
+        {{ knp_pagination_render(data, "", {"media_type": null}) }}
+    </div>
+{% endblock %}

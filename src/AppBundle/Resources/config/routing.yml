@@ -11,5 +11,12 @@ emailtemplate:
     resource: '@AppBundle/Controller/EmailTemplateController.php'
     type: rest
 
+localized_emailtemplate:
+    resource: '@AppBundle/Controller/LocalizedEmailTemplateController.php'
+    parent: emailtemplate
+    type: rest
+
 home:
     path: /
+    defaults:
+        _format: ~

@@ -1,16 +1,21 @@
-{% extends 'AppBundle:EmailAddress:skeleton.html.twig' %}
-{% block title %}{{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress.email}) }} | {{ parent() }}{% endblock %}
+{% extends 'AppBundle:EmailTemplate:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailTemplate.view.title'|trans({'%name%': emailTemplate.name}) }} | {{ parent() }}{% endblock %}
 {% block content %}
     <div class="panel-heading">
-        <h3 class="panel-title">{{ icon('list-alt') }} {{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress.email}) }}</h3>
+        <h3 class="panel-title">{{ icon('files-o') }} {{ 'admin.emailTemplate.view.title'|trans({'%name%': emailTemplate.name}) }}</h3>
     </div>
     <div class="panel-body">
         <dl class="dl-horizontal">
-            <dt>{{ 'label.name'|trans }}</dt><dd>{{ emailAddress.name }}</dd>
-            <dt>{{ 'label.email'|trans }}</dt><dd>{{ emailAddress.email }} {% if emailAddress.verified %}{{ label_success(icon('check-circle')) }}{% endif %}</dd>
+            <dt>{{ 'label.name'|trans }}</dt><dd>{{ emailTemplate.name }}</dd>
         </dl>
     </div>
-    {{ render(controller('VlAclBundle:Acl:get', {req: app.request, object: emailAddress})) }}
+    {{ render(controller('AppBundle:LocalizedEmailTemplate:cget', {
+        _inline_: true,
+        emailTemplate: emailTemplate,
+        _route: app.request.attributes.get('_route'),
+        _route_params:app.request.attributes.get('_route_params')
+    }, app.request.query.all())) }}
+    {{ render(controller('VlAclBundle:Acl:get', {req: app.request, object: emailTemplate})) }}
 {% endblock %}
 {% block javascript %}
     {{ parent() }}

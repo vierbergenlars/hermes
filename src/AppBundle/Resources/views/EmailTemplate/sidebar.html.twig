@@ -7,12 +7,12 @@
         <h3 class="panel-title">{{ 'admin.navigation.title'|trans }}</h3>
     </div>
     <div class="list-group">
-        {% if emailAddress is defined %}
-            {{ self.render_link('get_emailaddress', {emailAddress: emailAddress.id}, 'eye', 'admin.navigation.view'|trans, is_granted('VIEW', emailAddress)) }}
-            {{ self.render_link('edit_emailaddress', {emailAddress: emailAddress.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', emailAddress)) }}
-            {{ self.render_link('remove_emailaddress', {emailAddress: emailAddress.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', emailAddress)) }}
+        {% if emailTemplate is defined %}
+            {{ self.render_link('get_emailtemplate', {emailTemplate: emailTemplate.id}, 'eye', 'admin.navigation.view'|trans, is_granted('VIEW', emailTemplate)) }}
+            {{ self.render_link('edit_emailtemplate', {emailTemplate: emailTemplate.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', emailTemplate)) }}
+            {{ self.render_link('remove_emailtemplate', {emailTemplate: emailTemplate.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', emailTemplate)) }}
         {% endif %}
-        {{ self.render_link('get_emailaddresses', {}, 'list', 'admin.navigation.list'|trans, true) }}
-        {{ self.render_link('new_emailaddress', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_USER')) }}
+        {{ self.render_link('get_emailtemplates', {}, 'list', 'admin.navigation.list'|trans, true) }}
+        {{ self.render_link('new_emailtemplate', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_USER')) }}
     </div>
 </div>

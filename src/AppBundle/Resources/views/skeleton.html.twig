@@ -6,11 +6,13 @@
                 <div class="panel panel-
                 {%- spaceless %}
                     {% set _route = app.request.attributes.get('_route') %}
-                    {% if _route starts with 'admin_get_' %}
+                    {% if _route starts with 'admin_get_' or _route starts with 'get_' %}
                         info
-                    {% elseif _route starts with 'admin_post_' or _route starts with 'admin_put_' or _route starts with 'admin_delete_' %}
+                    {% elseif _route starts with 'admin_post_' or _route starts with 'post_'
+                        or _route starts with 'admin_put_' or _route starts with 'put_'
+                        or _route starts with 'admin_delete_' or _route starts with 'delete_' %}
                         warning
-                    {% elseif _route starts with 'admin_remove_' %}
+                    {% elseif _route starts with 'admin_remove_'  or _route starts with 'remove_' %}
                         danger
                     {% else %}
                         primary

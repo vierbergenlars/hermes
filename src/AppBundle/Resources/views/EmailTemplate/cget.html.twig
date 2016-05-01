@@ -1,15 +1,14 @@
-{% extends 'AppBundle:EmailAddress:skeleton.html.twig' %}
+{% extends 'AppBundle:EmailTemplate:skeleton.html.twig' %}
 {% block content %}
     <div class="panel-heading clearfix">
         {% include 'AppBundle::per_page_button.html.twig' %}
-        <h3 class="panel-title">{{ icon('list-alt') }} {{ 'admin.emailAddress.list.title'|trans }}</h3>
+        <h3 class="panel-title">{{ icon('files-o') }} {{ 'admin.emailTemplate.list.title'|trans }}</h3>
     </div>
     <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
                     <th>{{ 'label.name'|trans }}</th>
-                    <th>{{ 'label.email'|trans }}</th>
                     <th>{{ 'admin.actions'|trans }}</th>
                 </tr>
             </thead>
@@ -17,18 +16,16 @@
                 {% for obj in data %}
                     <tr>
                         <td>{{ obj.name }}</td>
-                        <td>{{ obj.email }} {% if obj.verified %}{{ label_success(icon('check-circle')) }}{% endif %}</td>
                         <td>
                             {% spaceless %}
                                 <div class="btn-group btn-group-sm">
-                                    <a class="btn btn-info {% if not is_granted('VIEW', obj) %}disabled{% endif %}" href="{{ url('get_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
+                                    <a class="btn btn-info {% if not is_granted('VIEW', obj) %}disabled{% endif %}" href="{{ url('get_emailtemplate', {emailTemplate: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
                                         {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
                                     </a>
-                                    <a class="btn btn-default {% if not is_granted('EDIT', obj) %}disabled{% endif %}" href="{{ url('edit_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.edit'|trans }}">
-
+                                    <a class="btn btn-default {% if not is_granted('EDIT', obj) %}disabled{% endif %}" href="{{ url('edit_emailtemplate', {emailTemplate: obj.id}) }}" title="{{ 'admin.navigation.edit'|trans }}">
                                         {{ icon('edit') }}<span class="sr-only">{{ 'admin.navigation.edit'|trans }}</span>
                                     </a>
-                                    <a class="btn btn-danger {% if not is_granted('DELETE', obj) %}disabled{% endif %}" href="{{ url('remove_emailaddress', {emailAddress: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                    <a class="btn btn-danger {% if not is_granted('DELETE', obj) %}disabled{% endif %}" href="{{ url('remove_emailtemplate', {emailTemplate: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
                                         {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
                                     </a>
                                 </div>

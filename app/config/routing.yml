@@ -17,4 +17,5 @@ logout:
 
 app:
     resource: "@AppBundle/Resources/config/routing.yml"
+    type: rest
 

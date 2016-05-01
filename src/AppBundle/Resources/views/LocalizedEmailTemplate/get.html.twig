@@ -1,0 +1,15 @@
+{% extends 'AppBundle:LocalizedEmailTemplate:skeleton.html.twig' %}
+{% block title %}{{ 'admin.localizedEmailTemplate.view.title'|trans({'%name%': emailTemplate.name, '%locale%': localizedEmailTemplate.locale}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('files-o') }} {{ 'admin.localizedEmailTemplate.view.title'|trans({'%name%': emailTemplate.name, '%locale%': localizedEmailTemplate.locale}) }}</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.name'|trans }}</dt><dd>{{ emailTemplate.name }}</dd>
+            <dt>{{ 'label.locale'|trans }}</dt><dd>{{ localizedEmailTemplate.locale }}</dd>
+            <dt>{{ 'label.subject'|trans }}</dt><dd><pre>{{ localizedEmailTemplate.subject }}</pre></dd>
+            <dt>{{ 'label.body'|trans }}</dt><dd><pre>{{ localizedEmailTemplate.body }}</pre></dd>
+        </dl>
+    </div>
+{% endblock %}
