@@ -1,0 +1,43 @@
+{% extends 'AppBundle:EmailTransport:skeleton.html.twig' %}
+{% block content %}
+    <div class="panel-heading clearfix">
+        {% include 'AppBundle::per_page_button.html.twig' %}
+        <h3 class="panel-title">{{ icon('exchange') }} {{ 'admin.emailTransport.list.title'|trans }}</h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.name'|trans }}</th>
+                    <th>{{ 'admin.actions'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in data %}
+                    <tr>
+                        <td>{{ obj.name }}</td>
+                        <td>
+                            {% spaceless %}
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-info {% if not is_granted('VIEW', obj) %}disabled{% endif %}" href="{{ url('get_emailtransport', {emailTransport: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
+                                        {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-default {% if not is_granted('EDIT', obj) %}disabled{% endif %}" href="{{ url('edit_emailtransport', {emailTransport: obj.id}) }}" title="{{ 'admin.navigation.edit'|trans }}">
+
+                                        {{ icon('edit') }}<span class="sr-only">{{ 'admin.navigation.edit'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-danger {% if not is_granted('DELETE', obj) %}disabled{% endif %}" href="{{ url('remove_emailtransport', {emailTransport: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                        {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
+                                    </a>
+                                </div>
+                            {% endspaceless %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body text-center">
+        {{ knp_pagination_render(data, "", {"media_type": null}) }}
+    </div>
+{% endblock %}

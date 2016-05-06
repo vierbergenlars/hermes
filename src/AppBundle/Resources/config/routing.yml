@@ -16,6 +16,10 @@ localized_emailtemplate:
     parent: emailtemplate
     type: rest
 
+emailtransport:
+    resource: '@AppBundle/Controller/EmailTransportController.php'
+    type: rest
+
 home:
     path: /
     defaults:

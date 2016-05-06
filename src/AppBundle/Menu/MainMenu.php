@@ -29,32 +29,31 @@ class MainMenu extends MenuItem
 {
     /**
      * MainMenu constructor.
-     * @param AuthorizationCheckerInterface $authorizationChecker
      * @param FactoryInterface $factory
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker, FactoryInterface $factory)
+    public function __construct(FactoryInterface $factory)
     {
         parent::__construct('root', $factory);
 
-        try {
-            $this->addChild('emailaddresses', [
-                'label' => 'app.menu.emailaddresses',
-                'route' => 'get_emailaddresses',
-            ]);
-            $this->addChild('emailtemplates', [
-                'label' => 'app.menu.emailtemplates',
-                'route' => 'get_emailtemplates',
-            ]);
-            if($authorizationChecker->isGranted('ROLE_ADMIN')) {
-                $this->addChild('admin_apiusers', [
-                    'label' => 'app.menu.apiusers',
-                    'route' => 'admin_get_apiusers',
-                ]);
-            }
-        } catch(AuthenticationCredentialsNotFoundException $ex) {
-            // Thrown when there is no token (on error pages)
-        }
-
+        $config = $this->addChild('config', [
+            'label' => 'app.menu.config'
+        ]);
+        $config->addChild('emailaddresses', [
+            'label' => 'app.menu.emailaddresses',
+            'route' => 'get_emailaddresses',
+        ]);
+        $config->addChild('emailtemplates', [
+            'label' => 'app.menu.emailtemplates',
+            'route' => 'get_emailtemplates',
+        ]);
+        $config->addChild('emailtransports', [
+            'label' => 'app.menu.emailtransports',
+            'route' => 'get_emailtransports',
+        ]);
+        $config->addChild('admin_apiusers', [
+            'label' => 'app.menu.apiusers',
+            'route' => 'admin_get_apiusers',
+        ]);
     }
 
 }
