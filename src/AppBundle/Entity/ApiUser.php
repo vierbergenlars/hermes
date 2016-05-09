@@ -23,10 +23,12 @@ namespace AppBundle\Entity;
 use AppBundle\Security\Acl\AutoAclInterface;
 use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity(fields={"username"})
  */
 class ApiUser extends User implements AutoAclInterface
 {
