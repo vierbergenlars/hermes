@@ -20,13 +20,15 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Security\Acl\AutoAclInterface;
+use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  */
-class ApiUser extends User
+class ApiUser extends User implements AutoAclInterface
 {
     /**
      * @var string
@@ -76,5 +78,12 @@ class ApiUser extends User
     public function updatePassword()
     {
         $this->password = base_convert(bin2hex(openssl_random_pseudo_bytes(32)), 16, 36);
+    }
+
+    public function getAclConfig()
+    {
+        return [
+            'ROLE_ADMIN' => MaskBuilder::MASK_OPERATOR,
+        ];
     }
 }

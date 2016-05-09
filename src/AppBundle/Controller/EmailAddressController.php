@@ -78,10 +78,6 @@ class EmailAddressController extends BaseController implements ClassResourceInte
         if($form->isValid()) {
             $this->getEntityManager()->persist($form->getData());
             $this->getEntityManager()->flush();
-            $acl = $this->getAclProvider()->createAcl(ObjectIdentity::fromDomainObject($form->getData()));
-            $acl->insertObjectAce(UserSecurityIdentity::fromAccount($this->getUser()), MaskBuilder::MASK_MASTER);
-            $acl->insertObjectAce(new RoleSecurityIdentity('ROLE_ADMIN'), MaskBuilder::MASK_OWNER);
-            $this->getAclProvider()->updateAcl($acl);
 
             return $this->redirectToRoute('get_emailaddress', ['emailAddress' => $form->getData()->getId()]);
         }
@@ -149,7 +145,6 @@ class EmailAddressController extends BaseController implements ClassResourceInte
         $form = $this->removeAction($emailAddress);
         $form->handleRequest($request);
         if($form->isValid()) {
-            $this->getAclProvider()->deleteAcl(ObjectIdentity::fromDomainObject($emailAddress));
             $this->getEntityManager()->remove($emailAddress);
             $this->getEntityManager()->flush();
 

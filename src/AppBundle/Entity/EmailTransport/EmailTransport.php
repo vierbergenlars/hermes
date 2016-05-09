@@ -21,6 +21,8 @@
 namespace AppBundle\Entity\EmailTransport;
 
 use AppBundle\Form\EmailTransport\EmailTransportType;
+use AppBundle\Security\Acl\AutoAclInterface;
+use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -37,7 +39,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\DiscriminatorMap({"mail"="MailTransport", "smtp"="SmtpTransport"})
  * @UniqueEntity(fields={"name"})
  */
-abstract class EmailTransport
+abstract class EmailTransport implements AutoAclInterface
 {
     const FORM_TYPE = EmailTransportType::class;
     /**
@@ -215,6 +217,14 @@ abstract class EmailTransport
     {
         $this->deliveryLatency = $deliveryLatency instanceof \DateInterval?$deliveryLatency->format("P%yY%mM%dDT%hH%iM%sS"):$deliveryLatency;
         return $this;
+    }
+
+    public function getAclConfig()
+    {
+        return [
+            self::CURRENT_USER => MaskBuilder::MASK_MASTER,
+            'ROLE_ADMIN' => MaskBuilder::MASK_OWNER,
+        ];
     }
 
     /**

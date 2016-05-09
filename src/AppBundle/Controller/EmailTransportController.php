@@ -83,10 +83,6 @@ class EmailTransportController extends BaseController implements ClassResourceIn
         if($form->isValid()) {
             $this->getEntityManager()->persist($form->getData());
             $this->getEntityManager()->flush();
-            $acl = $this->getAclProvider()->createAcl(ObjectIdentity::fromDomainObject($form->getData()));
-            $acl->insertObjectAce(UserSecurityIdentity::fromAccount($this->getUser()), MaskBuilder::MASK_MASTER);
-            $acl->insertObjectAce(new RoleSecurityIdentity('ROLE_ADMIN'), MaskBuilder::MASK_OWNER);
-            $this->getAclProvider()->updateAcl($acl);
 
             return $this->redirectToRoute('get_emailtransport', ['emailTransport' => $form->getData()->getId()]);
         }
@@ -172,7 +168,6 @@ class EmailTransportController extends BaseController implements ClassResourceIn
         $form = $this->removeAction($emailTransport);
         $form->handleRequest($request);
         if($form->isValid()) {
-            $this->getAclProvider()->deleteAcl(ObjectIdentity::fromDomainObject($emailTransport));
             $this->getEntityManager()->remove($emailTransport);
             $this->getEntityManager()->flush();
 

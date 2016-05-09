@@ -79,9 +79,6 @@ class ApiUserController extends BaseController implements ClassResourceInterface
         if($form->isValid()) {
             $this->getEntityManager()->persist($form->getData());
             $this->getEntityManager()->flush();
-            $acl = $this->getAclProvider()->createAcl(ObjectIdentity::fromDomainObject($form->getData()));
-            $acl->insertObjectAce(new RoleSecurityIdentity('ROLE_ADMIN'), MaskBuilder::MASK_OPERATOR);
-            $this->getAclProvider()->updateAcl($acl);
 
             return $this->redirectToRoute('admin_get_apiuser', ['user' => $form->getData()->getId()]);
         }
@@ -165,10 +162,9 @@ class ApiUserController extends BaseController implements ClassResourceInterface
         $form = $this->removeAction($user);
         $form->handleRequest($request);
         if($form->isValid()) {
-            $this->getAclProvider()->deleteSecurityIdentity(UserSecurityIdentity::fromAccount($user));
-            $this->getAclProvider()->deleteAcl(ObjectIdentity::fromDomainObject($user));
             $this->getEntityManager()->remove($user);
             $this->getEntityManager()->flush();
+            $this->getAclProvider()->deleteSecurityIdentity(UserSecurityIdentity::fromAccount($user));
 
             return $this->redirectToRoute('admin_get_apiusers');
         }

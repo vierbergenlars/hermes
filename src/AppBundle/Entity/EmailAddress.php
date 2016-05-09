@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Security\Acl\AutoAclInterface;
+use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @UniqueEntity(fields={"email"})
  */
-class EmailAddress
+class EmailAddress implements AutoAclInterface
 {
     /**
      * @var int
@@ -147,6 +149,14 @@ class EmailAddress
             return true;
         }
         return false;
+    }
+
+    public function getAclConfig()
+    {
+        return [
+            self::CURRENT_USER => MaskBuilder::MASK_MASTER,
+            'ROLE_ADMIN' => MaskBuilder::MASK_OWNER,
+        ];
     }
 }
 

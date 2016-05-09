@@ -80,11 +80,6 @@ class EmailTemplateController extends BaseController implements ClassResourceInt
         if($form->isValid()) {
             $this->getEntityManager()->persist($form->getData());
             $this->getEntityManager()->flush();
-            $acl = $this->getAclProvider()->createAcl(ObjectIdentity::fromDomainObject($form->getData()));
-            $acl->insertObjectAce(new RoleSecurityIdentity('ROLE_ADMIN'), MaskBuilder::MASK_OWNER);
-            $acl->insertObjectAce(new RoleSecurityIdentity('ROLE_USER'), MaskBuilder::MASK_USE);
-            $acl->insertObjectAce(UserSecurityIdentity::fromAccount($this->getUser()), MaskBuilder::MASK_MASTER);
-            $this->getAclProvider()->updateAcl($acl);
 
             return $this->redirectToRoute('get_emailtemplate', ['emailTemplate' => $form->getData()->getId()]);
         }
@@ -136,7 +131,6 @@ class EmailTemplateController extends BaseController implements ClassResourceInt
         $form = $this->removeAction($emailTemplate);
         $form->handleRequest($request);
         if($form->isValid()) {
-            $this->getAclProvider()->deleteAcl(ObjectIdentity::fromDomainObject($emailTemplate));
             $this->getEntityManager()->remove($emailTemplate);
             $this->getEntityManager()->flush();
 

@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Security\Acl\AutoAclInterface;
+use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @UniqueEntity(fields={"name"}, errorPath="name")
  */
-class EmailTemplate
+class EmailTemplate implements AutoAclInterface
 {
     /**
      * @var int
@@ -118,5 +120,16 @@ class EmailTemplate
     public function removeLocalizedTemplate(\AppBundle\Entity\LocalizedEmailTemplate $localizedTemplate)
     {
         $this->localizedTemplates->removeElement($localizedTemplate);
+    }
+
+    public function getAclConfig()
+    {
+        $config = [
+            self::CURRENT_USER => MaskBuilder::MASK_MASTER,
+            'ROLE_ADMIN' => MaskBuilder::MASK_OWNER,
+        ];
+        if(strncmp($this->getName(), '__inline__', 10) !== 0)
+            $config['ROLE_USER'] = MaskBuilder::MASK_USE;
+        return $config;
     }
 }
