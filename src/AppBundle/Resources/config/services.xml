@@ -44,5 +44,14 @@
             </argument>
             <tag name="form.type" />
         </service>
+        <service class="AppBundle\Form\Email\MessageType">
+            <argument type="service" id="security.authorization_checker"/>
+            <tag name="form.type" />
+        </service>
+        <service class="AppBundle\Form\FilteredEntityType\UseGrantedOnlyFilteredEntityType">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="security.authorization_checker"/>
+            <tag name="form.type" />
+        </service>
     </services>
 </container>
