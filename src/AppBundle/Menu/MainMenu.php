@@ -35,6 +35,15 @@ class MainMenu extends MenuItem
     {
         parent::__construct('root', $factory);
 
+        $this->addChild('messages', [
+            'label' => 'app.menu.messages',
+            'route' => 'get_messages',
+        ]);
+        $this->addChild('new_message', [
+            'label' => 'app.menu.messages.new',
+            'route' => 'new_message',
+        ]);
+
         $config = $this->addChild('config', [
             'label' => 'app.menu.config'
         ]);

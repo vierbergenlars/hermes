@@ -1,0 +1,47 @@
+{% extends 'AppBundle:EmailMessage:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailMessage.view.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessage.view.title'|trans({'%email%': message.sender.email}) }}</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.sender'|trans }}</dt><dd>{{ message.sender.name }} ({{ message.sender.email }})</dd>
+            {% if not (message.template.name starts with '__inline__') %}
+                <dt>{{ 'label.template'|trans }}</dt><dd><a href="{{ url('get_emailtemplate', {'emailTemplate': message.template.id}) }}">{{ icon('files-o fa-fw') }} {{ message.template.name }}</a></dd>
+            {% endif %}
+            <dt>{{ 'label.transport'|trans }}</dt><dd><a href="{{ url('get_emailtransport', {'emailTransport': message.transport.id}) }}">{{ icon('exchange fa-fw') }} {{ message.transport.name }}</a></dd>
+            <dt>{{ 'label.scheduledSendTime'|trans }}</dt>
+            <dd>
+                {% if message.scheduled %}
+                    {{ message.scheduledSendTime|date }}
+                {% else %}
+                    {{ label_danger('admin.emailMessage.label.unscheduled'|trans) }}
+                {% endif %}
+            </dd>
+            {% if message.sentTime %}
+                <dt>{{ 'label.sentTime'|trans }}</dt><dd>{{ message.sentTime|date }}</dd>
+            {% endif %}
+            <dt>{{ 'label.recipients'|trans }}</dt><dd>
+                {% for recipient in message.recipients %}
+                    {{ recipient }}<br>
+                {% endfor %}
+            </dd>
+        </dl>
+        {% if is_granted('VIEW', message.template) %}
+            <div class="panel panel-info">
+                {{ render(controller('AppBundle:EmailTemplate:get', {
+                    _inline_: true,
+                    emailTemplate: message.template,
+                    _route: app.request.attributes.get('_route'),
+                    _route_params:app.request.attributes.get('_route_params')
+                }, app.request.query.all())) }}
+            </div>
+        {% endif %}
+    </div>
+    {{ render(controller('VlAclBundle:Acl:get', {req: app.request, object: message})) }}
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/acl-modal.js') }}"></script>
+{% endblock %}

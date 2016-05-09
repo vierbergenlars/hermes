@@ -43,6 +43,7 @@ class EmailTemplateController extends BaseController implements ClassResourceInt
         $queryBuilder = $this->getEntityManager()
             ->getRepository('AppBundle:EmailTemplate')
             ->createQueryBuilder('e')
+            ->where('e.name NOT LIKE \'__inline__%\'')
         ;
         return $this->paginate($queryBuilder, $request);
     }

@@ -1,0 +1,51 @@
+{% extends 'AppBundle:EmailMessage:skeleton.html.twig' %}
+{% block content %}
+    <div class="panel-heading clearfix">
+        {% include 'AppBundle::per_page_button.html.twig' %}
+        <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessage.list.title'|trans }}</h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.sender'|trans }}</th>
+                    <th>{{ 'label.scheduledSendTime'|trans }}</th>
+                    <th>{{ 'admin.actions'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in data %}
+                    <tr>
+                        <td>{{ obj.sender.name }} ({{ obj.sender.email }})</td>
+                        <td>
+                            {% if obj.scheduled %}
+                                {{ obj.scheduledSendTime|date }}
+                            {% else %}
+                                {{ label_danger('admin.emailMessage.label.unscheduled'|trans) }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% spaceless %}
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-info {% if not is_granted('VIEW', obj) %}disabled{% endif %}" href="{{ url('get_message', {message: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
+                                        {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-default {% if not is_granted('EDIT', obj) %}disabled{% endif %}" href="{{ url('edit_message', {message: obj.id}) }}" title="{{ 'admin.navigation.edit'|trans }}">
+
+                                        {{ icon('edit') }}<span class="sr-only">{{ 'admin.navigation.edit'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-danger {% if not is_granted('DELETE', obj) %}disabled{% endif %}" href="{{ url('remove_message', {message: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                        {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
+                                    </a>
+                                </div>
+                            {% endspaceless %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body text-center">
+        {{ knp_pagination_render(data, "", {"media_type": null}) }}
+    </div>
+{% endblock %}

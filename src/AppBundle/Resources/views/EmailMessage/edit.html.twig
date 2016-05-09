@@ -1,0 +1,22 @@
+{% extends 'AppBundle:EmailMessage:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailMessage.edit.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessage.edit.title'|trans({'%email%': message.sender.email}) }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ form(form) }}
+    </div>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        {#
+            Trigger a change event on the template selector so the javascript attached to the field is run.
+            That javascript snippet will show or hide the inline template edit form depending on the option that is selected.
+            Because the inline template edit form is shown by default, and only hidden on change of the template selector
+            we need to manually trigger such an event to hide it when appropriate.
+        #}
+        $('#message_template_opt_1').trigger('change');
+    </script>
+{% endblock %}

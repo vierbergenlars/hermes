@@ -7,6 +7,8 @@ app.menu.emailaddresses: '.icon-envelope Email addresses'
 app.menu.emailtemplates: '.icon-files-o Email templates'
 app.menu.config: '.icon-cog Configuration'
 app.menu.emailtransports: '.icon-exchange Email transports'
+app.menu.messages: '.icon-envelope-o Emails'
+app.menu.messages.new: '.icon-envelope-o New email'
 
 # Navigation
 admin.navigation.title: Navigation
@@ -82,3 +84,20 @@ label.deliveryStarttime: 'Delivery starttime'
 label.deliveryPeriodDuration: 'Delivery period duration'
 label.deliveryPeriodMaxmails: 'Maximum number of mails per delivery period'
 label.deliveryLatency: 'Delivery latency'
+
+# Email messages
+admin.emailMessage.title: 'Email messages'
+admin.emailMessage.list.title: 'Email messages'
+admin.emailMessage.view.title: 'Message from %email%'
+admin.emailMessage.edit.title: 'Edit message from %email%'
+admin.emailMessage.new.title: 'New email message'
+admin.emailMessage.delete.title: 'Delete message from %email%'
+admin.emailMessage.delete: 'Delete email message'
+admin.emailMessage.label.unscheduled: 'Unscheduled'
+
+label.sender: 'Sender'
+label.template: 'Template'
+label.scheduledSendTime: 'Scheduled send time'
+label.transport: 'Transport'
+label.recipients: 'Recipients'
+label.template.create_new: 'Create new template'

@@ -1,13 +1,9 @@
-{% extends 'AppBundle:EmailTemplate:skeleton.html.twig' %}
+{% set inline =  app.request.attributes.get('_inline_', false) %}
+{% extends inline ? 'AppBundle::skeleton_inline.html.twig': 'AppBundle:EmailTemplate:skeleton.html.twig' %}
 {% block title %}{{ 'admin.emailTemplate.view.title'|trans({'%name%': emailTemplate.name}) }} | {{ parent() }}{% endblock %}
 {% block content %}
     <div class="panel-heading">
         <h3 class="panel-title">{{ icon('files-o') }} {{ 'admin.emailTemplate.view.title'|trans({'%name%': emailTemplate.name}) }}</h3>
-    </div>
-    <div class="panel-body">
-        <dl class="dl-horizontal">
-            <dt>{{ 'label.name'|trans }}</dt><dd>{{ emailTemplate.name }}</dd>
-        </dl>
     </div>
     {{ render(controller('AppBundle:LocalizedEmailTemplate:cget', {
         _inline_: true,
@@ -15,7 +11,9 @@
         _route: app.request.attributes.get('_route'),
         _route_params:app.request.attributes.get('_route_params')
     }, app.request.query.all())) }}
-    {{ render(controller('VlAclBundle:Acl:get', {req: app.request, object: emailTemplate})) }}
+    {% if not inline %}
+        {{ render(controller('VlAclBundle:Acl:get', {req: app.request, object: emailTemplate})) }}
+    {% endif %}
 {% endblock %}
 {% block javascript %}
     {{ parent() }}

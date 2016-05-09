@@ -20,6 +20,10 @@ emailtransport:
     resource: '@AppBundle/Controller/EmailTransportController.php'
     type: rest
 
+emailmessage:
+    resource: '@AppBundle/Controller/EmailMessageController.php'
+    type: rest
+
 home:
     path: /
     defaults:

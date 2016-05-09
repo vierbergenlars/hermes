@@ -1,0 +1,18 @@
+{% macro render_link(route, param, ico, name, authorized) %}
+    <a class="list-group-item {% if app.request.attributes.get('_route') == route %} active{% endif %}{% if not authorized %} disabled{% endif %}" href="{{ url(route, param) }}">{{ icon(ico~' fa-fw') }} {{ name }}</a>
+{% endmacro %}
+{% import _self as self %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'admin.navigation.title'|trans }}</h3>
+    </div>
+    <div class="list-group">
+        {% if message is defined %}
+            {{ self.render_link('get_message', {message: message.id}, 'eye', 'admin.navigation.view'|trans, is_granted('VIEW', message)) }}
+            {{ self.render_link('edit_message', {message: message.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', message)) }}
+            {{ self.render_link('remove_message', {message: message.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', message)) }}
+        {% endif %}
+        {{ self.render_link('get_messages', {}, 'list', 'admin.navigation.list'|trans, true) }}
+        {{ self.render_link('new_message', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_USER')) }}
+    </div>
+</div>
