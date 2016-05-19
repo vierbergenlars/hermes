@@ -10,7 +10,6 @@
             {% if not (message.template.name starts with '__inline__') %}
                 <dt>{{ 'label.template'|trans }}</dt><dd><a href="{{ url('get_emailtemplate', {'emailTemplate': message.template.id}) }}">{{ icon('files-o fa-fw') }} {{ message.template.name }}</a></dd>
             {% endif %}
-            <dt>{{ 'label.transport'|trans }}</dt><dd><a href="{{ url('get_emailtransport', {'emailTransport': message.transport.id}) }}">{{ icon('exchange fa-fw') }} {{ message.transport.name }}</a></dd>
             <dt>{{ 'label.scheduledSendTime'|trans }}</dt>
             <dd>
                 {% if message.scheduled %}

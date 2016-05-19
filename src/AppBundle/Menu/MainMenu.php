@@ -55,10 +55,6 @@ class MainMenu extends MenuItem
             'label' => 'app.menu.emailtemplates',
             'route' => 'get_emailtemplates',
         ]);
-        $config->addChild('emailtransports', [
-            'label' => 'app.menu.emailtransports',
-            'route' => 'get_emailtransports',
-        ]);
         $config->addChild('admin_apiusers', [
             'label' => 'app.menu.apiusers',
             'route' => 'admin_get_apiusers',

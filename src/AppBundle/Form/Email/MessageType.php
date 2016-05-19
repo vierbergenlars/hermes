@@ -48,11 +48,6 @@ class MessageType extends AbstractType
             ->add('template', FormType::class, [
                 'label' => 'label.template',
             ])
-            ->add('transport', UseGrantedOnlyFilteredEntityType::class, [
-                'class' => EmailTransport::class,
-                'choice_label' => 'name',
-                'label' => 'label.transport',
-            ])
         ;
         $builder->get('template')
             ->add('opt_1', UseGrantedOnlyFilteredEntityType::class, [

@@ -6,7 +6,6 @@ app.menu.apiusers: '.icon-key API Users'
 app.menu.emailaddresses: '.icon-envelope Email addresses'
 app.menu.emailtemplates: '.icon-files-o Email templates'
 app.menu.config: '.icon-cog Configuration'
-app.menu.emailtransports: '.icon-exchange Email transports'
 app.menu.messages: '.icon-envelope-o Emails'
 app.menu.messages.new: '.icon-envelope-o New email'
 
@@ -67,23 +66,6 @@ label.templates: 'Templates'
 label.locale: 'Language'
 label.subject: 'Subject'
 label.body: 'Body'
-
-# Email transports
-admin.emailTransport.new.mail: 'Create mail transport'
-admin.emailTransport.new.smtp: 'Create SMTP transport'
-admin.emailTransport.title: 'Email transports'
-admin.emailTransport.list.title: 'Email transports'
-admin.emailTransport.view.title: 'Transport %name%'
-admin.emailTransport.edit.title: 'Edit transport %name%'
-admin.emailTransport.new.title: 'Create new email transport'
-admin.emailTransport.delete.title: 'Delete email transport %name%'
-admin.emailTransport.delete: 'Delete email transport'
-
-label.type: 'Type'
-label.deliveryStarttime: 'Delivery starttime'
-label.deliveryPeriodDuration: 'Delivery period duration'
-label.deliveryPeriodMaxmails: 'Maximum number of mails per delivery period'
-label.deliveryLatency: 'Delivery latency'
 
 # Email messages
 admin.emailMessage.title: 'Email messages'

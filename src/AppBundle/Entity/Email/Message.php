@@ -228,30 +228,6 @@ class Message implements AutoAclInterface
     }
 
     /**
-     * Set transport
-     *
-     * @param \AppBundle\Entity\EmailTransport\EmailTransport $transport
-     *
-     * @return Message
-     */
-    public function setTransport(\AppBundle\Entity\EmailTransport\EmailTransport $transport = null)
-    {
-        $this->transport = $transport;
-
-        return $this;
-    }
-
-    /**
-     * Get transport
-     *
-     * @return \AppBundle\Entity\EmailTransport\EmailTransport
-     */
-    public function getTransport()
-    {
-        return $this->transport;
-    }
-
-    /**
      * Add recipient
      *
      * @param \AppBundle\Entity\Email\Recipient $recipient
