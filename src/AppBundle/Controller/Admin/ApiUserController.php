@@ -111,6 +111,7 @@ class ApiUserController extends BaseController implements ClassResourceInterface
 
     /**
      * @NoRoute
+     * @View
      */
     public function rotateFormAction(ApiUser $user)
     {
