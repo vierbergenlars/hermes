@@ -22,10 +22,26 @@ namespace AppBundle\Security;
 
 use AppBundle\Entity\ApiUser;
 use AppBundle\Security\Acl\Permission\MaskBuilder;
+use vierbergenlars\Authserver\Client\Repository\GroupRepository;
 use vierbergenlars\Bundle\AclBundle\VlAclBundle\DataProvider\DefaultDataProvider;
 
 class DataProvider extends DefaultDataProvider
 {
+    /**
+     * @var GroupRepository
+     */
+    private $groupRepo;
+
+    /**
+     * DataProvider constructor.
+     *
+     * @param GroupRepository $groupRepo
+     */
+    public function __construct(GroupRepository $groupRepo)
+    {
+        $this->groupRepo = $groupRepo;
+    }
+
     public function getMasksMap()
     {
         return [
@@ -43,7 +59,13 @@ class DataProvider extends DefaultDataProvider
 
     public function getRoles()
     {
-        return parent::getRoles();
+        $roles = parent::getRoles();
+        $groups = $this->groupRepo->findBy(['exportable'=>true]);
+        foreach($groups as $group) {
+            /* @var $group \vierbergenlars\Authserver\Client\Model\Group */
+            $roles[$group->getDisplayName().' ('.$group->getName().')'] = 'ROLE_GROUP_'.strtoupper($group->getName());
+        }
+        return $roles;
     }
 
     public function getUserClass()

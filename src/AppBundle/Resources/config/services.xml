@@ -33,7 +33,14 @@
         <service class="AppBundle\EventListener\UpdateAclListener" autowire="true">
             <tag name="doctrine.event_subscriber" />
         </service>
-        <service class="AppBundle\Security\DataProvider" id="app.acl_data_provider" />
+        <service class="AppBundle\Security\DataProvider" id="app.acl_data_provider">
+            <argument type="service">
+                <service class="vierbergenlars\Authserver\Client\Repository\GroupRepository">
+                    <factory service="authserver.client" method="getRepository" />
+                    <argument>vierbergenlars\Authserver\Client\Model\Group</argument>
+                </service>
+            </argument>
+        </service>
         <service id="security.acl.permission.map" class="AppBundle\Security\Acl\Permission\PermissionMap" public="false" />
         <service class="AppBundle\Form\LocalizedEmailTemplateType">
             <argument type="service">
