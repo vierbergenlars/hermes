@@ -1,0 +1,49 @@
+{% extends 'AppBundle:EmailMessageRecipient:skeleton.html.twig' %}
+{% block content %}
+    <div class="panel-heading clearfix">
+        {% include 'AppBundle::per_page_button.html.twig' %}
+        {% if recipient is not defined %}
+            <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessageRecipient.list.title'|trans({'%email%': message.sender.email}) }}</h3>
+        {% else %}
+            <h3 class="panel-title">{{ icon('code-fork') }} {{ 'admin.emailMessageRecipient.children.title'|trans({'%recipient%': recipient, '%email%': message.sender.email}) }}</h3>
+        {% endif %}
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.description'|trans }}</th>
+                    <th>{{ 'admin.actions'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in data %}
+                    <tr>
+                        <td>
+                            {{ obj }}
+                            {% include 'AppBundle:EmailMessageRecipient:recipient_status.html.twig' with {recipient:obj} only %}
+                        </td>
+                        <td>
+                            {% spaceless %}
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-info {% if not is_granted('VIEW', message) %}disabled{% endif %}" href="{{ url('get_message_recipient', {message: message.id, recipient: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
+                                        {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-default {% if not is_granted('VIEW', message) or obj.__toString() starts with 'StandardRecipient' %}disabled{% endif %}" href="{{ url('get_message_recipients_children', {message: message.id, recipient: obj.id}) }}" title="{{ 'admin.navigation.recipientChildren'|trans }}">
+                                        {{ icon('code-fork') }}<span class="sr-only">{{ 'admin.navigation.recipientChildren'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-danger {% if not is_granted('EDIT', message) %}disabled{% endif %}" href="{{ url('remove_message_recipient', {message: message.id, recipient: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                        {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
+                                    </a>
+                                </div>
+                            {% endspaceless %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body text-center">
+        {{ knp_pagination_render(data, "", {"media_type": null}) }}
+    </div>
+{% endblock %}

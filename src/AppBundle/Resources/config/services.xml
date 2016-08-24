@@ -33,7 +33,7 @@
         <service class="AppBundle\EventListener\UpdateAclListener" autowire="true">
             <tag name="doctrine.event_subscriber" />
         </service>
-        <service class="AppBundle\Security\DataProvider" id="app.acl_data_provider"/>
+        <service class="AppBundle\Security\DataProvider" id="app.acl_data_provider" />
         <service id="security.acl.permission.map" class="AppBundle\Security\Acl\Permission\PermissionMap" public="false" />
         <service class="AppBundle\Form\LocalizedEmailTemplateType">
             <argument type="service">
@@ -52,6 +52,32 @@
             <argument type="service" id="doctrine" />
             <argument type="service" id="security.authorization_checker"/>
             <tag name="form.type" />
+        </service>
+        <service id="authserver.client" class="vierbergenlars\Authserver\Client\AuthserverAdminClient">
+            <argument type="service">
+                <service class="GuzzleHttp\Client">
+                    <argument type="collection">
+                        <argument key="base_uri">%authserver_base_uri%</argument>
+                        <argument key="auth" type="collection">
+                            <argument>%authserver_api_username%</argument>
+                            <argument>%authserver_api_password%</argument>
+                        </argument>
+                        <argument key="headers" type="collection">
+                            <argument key="Accept">application/json</argument>
+                        </argument>
+                    </argument>
+                </service>
+            </argument>
+        </service>
+        <service class="AppBundle\EventListener\QueueMessageListener">
+            <argument type="service" id="twig" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        <service class="AppBundle\EventListener\AuthserverQueueMessageListener">
+            <argument type="service" id="authserver.client" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="kernel.event_subscriber" />
         </service>
     </services>
 </container>

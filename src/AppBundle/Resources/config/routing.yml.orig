@@ -1,0 +1,18 @@
+admin:
+    resource: routing/admin.yml
+    type: rest
+    prefix: /admin
+
+<<<<<<< HEAD
+=======
+emailaddress:
+    resource: '@AppBundle/Controller/EmailAddressController.php'
+    type: rest
+
+emailtemplate:
+    resource: '@AppBundle/Controller/EmailTemplateController.php'
+    type: rest
+
+>>>>>>> 4930f7d... Move EmailAddress controller out of admin namespace
+home:
+    path: /

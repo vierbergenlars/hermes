@@ -1,0 +1,23 @@
+{% macro render_link(route, param, ico, name, authorized) %}
+    <a class="list-group-item {% if app.request.attributes.get('_route') == route %} active{% endif %}{% if not authorized %} disabled{% endif %}" href="{{ url(route, param) }}">{{ icon(ico~' fa-fw') }} {{ name }}</a>
+{% endmacro %}
+{% import _self as self %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'admin.navigation.title'|trans }}</h3>
+    </div>
+    <div class="list-group">
+        {% if recipient is defined %}
+            {{ self.render_link('get_message_recipient', {message: message.id, recipient: recipient.id}, 'eye', 'admin.navigation.view'|trans, is_granted('VIEW', message)) }}
+            {{ self.render_link('get_message_recipients_children', {message: message.id, recipient: recipient.id}, 'code-fork', 'admin.navigation.recipientChildren'|trans, is_granted('VIEW', message) and not (recipient.__toString() starts with 'StandardRecipient')) }}
+            {{ self.render_link('remove_message_recipient', {message: message.id, recipient: recipient.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('EDIT', message)) }}
+        {% endif %}
+        {{ self.render_link('get_message_recipients', {message: message.id}, 'list', 'admin.navigation.list'|trans, is_granted('VIEW', message)) }}
+        {{ self.render_link('new_message_recipient', {message: message.id}, 'plus', 'admin.navigation.new'|trans, is_granted('EDIT', message)) }}
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="list-group">
+        {{ self.render_link('get_message', {message: message.id}, 'arrow-left', 'admin.navigation.backToMessage'|trans, is_granted('VIEW', message)) }}
+    </div>
+</div>

@@ -6,6 +6,7 @@
     </div>
     <div class="panel-body">
         <dl class="dl-horizontal">
+            {# @var message \AppBundle\Entity\Email\Message #}
             <dt>{{ 'label.sender'|trans }}</dt><dd>{{ message.sender.name }} ({{ message.sender.email }})</dd>
             {% if not (message.template.name starts with '__inline__') %}
                 <dt>{{ 'label.template'|trans }}</dt><dd><a href="{{ url('get_emailtemplate', {'emailTemplate': message.template.id}) }}">{{ icon('files-o fa-fw') }} {{ message.template.name }}</a></dd>
@@ -20,10 +21,13 @@
             </dd>
             {% if message.sentTime %}
                 <dt>{{ 'label.sentTime'|trans }}</dt><dd>{{ message.sentTime|date }}</dd>
+            {% elseif message.queued %}
+                <dt>{{ 'label.queuedTime'|trans }}</dt><dd>{{ message.queuedTime|date }}</dd>
             {% endif %}
             <dt>{{ 'label.recipients'|trans }}</dt><dd>
-                {% for recipient in message.recipients %}
-                    {{ recipient }}<br>
+                {% for recipient in message.originalRecipients %}
+                    {# @var recipient \AppBundle\Entity\Email\Recipient #}
+                    {{ recipient }} {% include 'AppBundle:EmailMessageRecipient:recipient_status.html.twig' with {recipient: recipient} only %}<br>
                 {% endfor %}
             </dd>
         </dl>
@@ -33,7 +37,7 @@
                     _inline_: true,
                     emailTemplate: message.template,
                     _route: app.request.attributes.get('_route'),
-                    _route_params:app.request.attributes.get('_route_params')
+                    _route_params: app.request.attributes.get('_route_params')
                 }, app.request.query.all())) }}
             </div>
         {% endif %}

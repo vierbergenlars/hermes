@@ -1,0 +1,28 @@
+{% extends 'AppBundle:EmailMessageRecipient:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailMessageRecipient.new.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessageRecipient.new.title'|trans({'%email%': message.sender.email}) }}</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            {% set active_form = forms|first %}
+            {% for form in forms %}
+                {% if not form.vars['valid'] %}
+                    {% set active_form = form %}
+                {% endif %}
+            {% endfor %}
+            {% for name, form in forms %}
+                {{ form_errors(form) }}
+                <li role="presentation" {% if form is same as(active_form) %}class="active"{% endif %}><a href="#form-{{ name }}" role="tab" data-toggle="tab">{{ ('admin.emailMessageRecipient.type.'~name)|trans }}</a></li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for name, form in forms %}
+                <div role="tabpanel" class="tab-pane {% if form is same as(active_form) %}active{% endif %}" id="form-{{ name }}">
+                    {{ form(form) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

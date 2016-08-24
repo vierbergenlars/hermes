@@ -11,8 +11,18 @@
             {{ self.render_link('get_message', {message: message.id}, 'eye', 'admin.navigation.view'|trans, is_granted('VIEW', message)) }}
             {{ self.render_link('edit_message', {message: message.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', message)) }}
             {{ self.render_link('remove_message', {message: message.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', message)) }}
+            {{ self.render_link('queue_message', {message: message.id}, 'paper-plane-o', 'admin.navigation.queueMessage'|trans, is_granted('EDIT', message) and not message.queued) }}
         {% endif %}
         {{ self.render_link('get_messages', {}, 'list', 'admin.navigation.list'|trans, true) }}
         {{ self.render_link('new_message', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_USER')) }}
     </div>
 </div>
+
+{% if message is defined %}
+    <div class="panel panel-default">
+        <div class="list-group">
+            {{ self.render_link('get_message_recipients', {message: message.id}, 'list', 'admin.emailMessageRecipient.list'|trans, is_granted('VIEW', message)) }}
+            {{ self.render_link('new_message_recipient', {message: message.id}, 'plus', 'admin.emailMessageRecipient.new'|trans, is_granted('EDIT', message)) }}
+        </div>
+    </div>
+{% endif %}

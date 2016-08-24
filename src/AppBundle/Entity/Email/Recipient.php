@@ -20,7 +20,9 @@
 
 namespace AppBundle\Entity\Email;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * Recipient
@@ -43,11 +45,55 @@ abstract class Recipient
     private $id;
 
     /**
+     * @var Recipient[]
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Email\Recipient", mappedBy="originatingRecipient", cascade={"remove"})
+     */
+    private $childRecipients;
+
+    /**
+     * @var Recipient
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Email\Recipient", inversedBy="childRecipients", cascade={"ALL"})
+     */
+    private $originatingRecipient;
+
+    /**
      * @var Message
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Email\Message", inversedBy="recipients")
      */
     private $message;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="queued_time", type="datetime", nullable=true)
+     */
+    private $queuedTime;
+
+    /**
+     * @var \DateTime|null
+     *
+     * @ORM\Column(name="failed_time", type="datetime", nullable=true)
+     */
+    private $failedTime;
+
+    /**
+     * @var \Exception
+     *
+     * @ORM\Column(name="failure_message", type="text", nullable=true)
+     */
+    private $failureMessage;
+
+    /**
+     * Recipient constructor.
+     * @param Message $message
+     */
+    public function __construct(Message $message)
+    {
+        $this->message = $message;
+    }
 
     /**
      * Get id
@@ -75,6 +121,104 @@ abstract class Recipient
     {
         $this->message = $message;
         return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getQueuedTime()
+    {
+        return $this->queuedTime;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isQueued()
+    {
+        return $this->queuedTime !== null;
+    }
+
+    /**
+     * @param \DateTime|null $queuedTime
+     * @return Recipient
+     */
+    public function setQueuedTime($queuedTime)
+    {
+        $this->queuedTime = $queuedTime;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getFailedTime()
+    {
+        return $this->failedTime;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFailed()
+    {
+        return $this->failedTime !== null;
+    }
+
+    /**
+     * @param \DateTime|null $failedTime
+     * @return Recipient
+     */
+    public function setFailedTime($failedTime)
+    {
+        $this->failedTime = $failedTime;
+        return $this;
+    }
+
+    /**
+     * @return Recipient
+     */
+    public function getOriginatingRecipient()
+    {
+        return $this->originatingRecipient;
+    }
+
+    /**
+     * @param Recipient $originatingRecipient
+     * @return Recipient
+     */
+    public function setOriginatingRecipient(Recipient $originatingRecipient)
+    {
+        $this->originatingRecipient = $originatingRecipient;
+        return $this;
+    }
+
+    abstract public function __toString();
+
+    /**
+     * @return string
+     */
+    public function getFailureMessage()
+    {
+        return $this->failureMessage;
+    }
+
+    /**
+     * @param string $failureMessage
+     * @return Recipient
+     */
+    public function setFailureMessage($failureMessage)
+    {
+        $this->failureMessage = $failureMessage;
+        return $this;
+    }
+
+    /**
+     * @return Recipient[]|Collection
+     */
+    public function getChildRecipients()
+    {
+        return $this->childRecipients;
     }
 }
 

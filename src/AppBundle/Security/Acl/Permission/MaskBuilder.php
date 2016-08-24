@@ -26,4 +26,26 @@ class MaskBuilder extends \Symfony\Component\Security\Acl\Permission\MaskBuilder
     const MASK_USE = 256;  // 1 << 8
 
     const CODE_USE = 'U';
+
+    public static function getName($mask)
+    {
+        if (!is_int($mask)) {
+            throw new \InvalidArgumentException('$mask must be an integer.');
+        }
+
+        $reflection = new \ReflectionClass(get_called_class());
+        foreach ($reflection->getConstants() as $name => $cMask) {
+            if (0 !== strpos($name, 'MASK_') || $mask !== $cMask) {
+                continue;
+            }
+
+            if (!defined($cName = 'static::CODE_'.substr($name, 5))) {
+                throw new \RuntimeException('There was no code defined for this mask.');
+            }
+
+            return substr($name, 5);
+        }
+
+        throw new \InvalidArgumentException(sprintf('The mask "%d" is not supported.', $mask));
+    }
 }

@@ -1,4 +1,22 @@
 <?php
+/**
+ * Hermes, an HTTP-based templated mail sender for transactional and mass mailing.
+ *
+ * Copyright (C) 2016  Lars Vierbergen
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 namespace AppBundle\Entity\Email;
 
@@ -6,7 +24,10 @@ use AppBundle\Entity\EmailAddress;
 use AppBundle\Entity\EmailTemplate;
 use AppBundle\Entity\EmailTransport\EmailTransport;
 use AppBundle\Security\Acl\AutoAclInterface;
+use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -14,7 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Message
  *
  * @ORM\Table(name="email_message")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="MessageRepository")
  */
 class Message implements AutoAclInterface
 {
@@ -54,14 +75,6 @@ class Message implements AutoAclInterface
     private $templateData;
 
     /**
-     * @var EmailTransport
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EmailTransport\EmailTransport")
-     * @Assert\Valid()
-     */
-    private $transport;
-
-    /**
      * @var Recipient[]
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Email\Recipient", mappedBy="message")
@@ -75,6 +88,13 @@ class Message implements AutoAclInterface
      * @ORM\Column(name="scheduled_send_time", type="datetime", nullable=true)
      */
     private $scheduledSendTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="queued_time", type="datetime", nullable=true)
+     */
+    private $queuedTime;
 
     /**
      * @var \DateTime
@@ -176,7 +196,7 @@ class Message implements AutoAclInterface
      */
     public function getTemplateData()
     {
-        return $this->templateData;
+        return (array)$this->templateData;
     }
 
     /**
@@ -252,17 +272,61 @@ class Message implements AutoAclInterface
     }
 
     /**
-     * Get recipients
+     * Get original recipients
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Recipient[]|Collection
+     */
+    public function getOriginalRecipients()
+    {
+        return $this->recipients->matching(
+            Criteria::create()
+                ->where(Criteria::expr()->isNull('originatingRecipient'))
+        );
+    }
+
+    /**
+     * Get recipients
+     * @return Recipient[]|Collection
      */
     public function getRecipients()
     {
         return $this->recipients;
     }
 
+
     public function getAclConfig()
     {
-        return self::DEFAULT_ACL_CONFIG;
+        return [
+            self::CURRENT_USER => MaskBuilder::MASK_MASTER,
+            'ROLE_ADMIN' => MaskBuilder::MASK_OWNER,
+        ];
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getQueuedTime()
+    {
+        return $this->queuedTime;
+    }
+
+    /**
+     * @param \DateTime $queuedTime
+     *
+     * @return Message
+     */
+    public function setQueuedTime($queuedTime)
+    {
+        $this->queuedTime = $queuedTime;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isQueued()
+    {
+        return $this->queuedTime !== null;
     }
 }

@@ -1,0 +1,6 @@
+{# @var recipient \AppBundle\Entity\Email\Recipient #}
+{% if recipient.failed %}
+    {{ label_danger('admin.emailMessageRecipient.label.failed'|trans) }}
+{% elseif recipient.queued %}
+    {{ label_info('admin.emailMessageRecipient.label.queued'|trans) }}
+{% endif %}

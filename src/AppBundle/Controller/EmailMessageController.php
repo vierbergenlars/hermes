@@ -22,14 +22,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Email\Message;
 use AppBundle\Form\Email\MessageType;
-use AppBundle\Security\Acl\Permission\MaskBuilder;
+use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
-use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
 
 /**
  * @View
@@ -93,6 +92,31 @@ class EmailMessageController extends BaseController implements ClassResourceInte
     {
         $form = $this->editAction($message);
         $form->handleRequest($request);
+        if($form->isValid()) {
+            $this->getEntityManager()->flush();
+
+            return $this->redirectToRoute('get_message', ['message' => $message->getId()]);
+        }
+        return $form;
+    }
+
+    /**
+     * @Route(methods={"GET", "POST"})
+     */
+    public function queueAction(Request $request, Message $message)
+    {
+        $this->denyAccessUnlessGranted('EDIT', $message);
+        if($message->isQueued())
+            throw $this->createAccessDeniedException('Message is already in the send queue.');
+        $message->setScheduledSendTime(new \DateTime());
+        $form = $this->createFormBuilder($message)
+            ->add('scheduledSendTime', DateTimeType::class, [
+                'label' => 'label.scheduledSendTime',
+            ])
+            ->add('submit', SubmitType::class, ['label' => 'form.submit'])
+            ->getForm();
+        $form->handleRequest($request);
+
         if($form->isValid()) {
             $this->getEntityManager()->flush();
 

@@ -42,6 +42,8 @@ admin.emailAddress.new.title: 'Link email address'
 admin.emailAddress.delete.title: 'Unlink %email%'
 admin.emailAddress.delete: 'Unlink email address'
 
+flash.emailAddress.confirmation.success: 'This email address has been confirmed'
+
 label.email: 'Email address'
 
 # Email templates
@@ -74,8 +76,11 @@ admin.emailMessage.view.title: 'Message from %email%'
 admin.emailMessage.edit.title: 'Edit message from %email%'
 admin.emailMessage.new.title: 'New email message'
 admin.emailMessage.delete.title: 'Delete message from %email%'
+admin.emailMessage.queue.title: 'Queue message for sending from %email%'
 admin.emailMessage.delete: 'Delete email message'
 admin.emailMessage.label.unscheduled: 'Unscheduled'
+
+admin.navigation.queueMessage: 'Queue message for sending'
 
 label.sender: 'Sender'
 label.template: 'Template'
@@ -83,3 +88,31 @@ label.scheduledSendTime: 'Scheduled send time'
 label.transport: 'Transport'
 label.recipients: 'Recipients'
 label.template.create_new: 'Create new template'
+label.queuedTime: 'Queued at'
+
+# Email message recipients
+
+admin.emailMessageRecipient.title: 'Recipients of message from %email%'
+admin.emailMessageRecipient.list.title: 'Recipients of message from %email%'
+admin.emailMessageRecipient.view.title: 'Recipient of message from %email%'
+admin.emailMessageRecipient.new.title: 'Add recipient to message from %email%'
+admin.emailMessageRecipient.new: 'Add recipient to message'
+admin.emailMessageRecipient.list: 'Recipients of message'
+admin.emailMessageRecipient.delete.title: 'Delete recipient from message from %email%'
+admin.emailMessageRecipient.delete: 'Delete recipient from from message'
+admin.emailMessageRecipient.children.title: 'Resolved recipients of %recipient% of message from %email%'
+
+admin.emailMessageRecipient.type.standardRecipient: 'Normal recipient'
+admin.emailMessageRecipient.type.authserverRecipient: 'Authserver user recipient'
+admin.emailMessageRecipient.type.groupRecipient: 'Authserver group recipients'
+
+admin.emailMessageRecipient.label.failed: 'Failed'
+admin.emailMessageRecipient.label.queued: 'Queued'
+
+admin.navigation.backToMessage: 'Back to message'
+admin.navigation.recipientChildren: 'Resolved recipients'
+
+label.description: 'Description'
+label.failedTime: 'Failed at'
+label.failureMessage: 'Failure message'
+label.originatingRecipient: 'Originating recipient'

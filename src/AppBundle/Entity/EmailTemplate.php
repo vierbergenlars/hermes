@@ -1,4 +1,22 @@
 <?php
+/**
+ * Hermes, an HTTP-based templated mail sender for transactional and mass mailing.
+ *
+ * Copyright (C) 2016  Lars Vierbergen
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 namespace AppBundle\Entity;
 
@@ -6,6 +24,7 @@ use AppBundle\Security\Acl\AutoAclInterface;
 use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -94,6 +113,24 @@ class EmailTemplate implements AutoAclInterface
     public function getLocalizedTemplates()
     {
         return $this->localizedTemplates;
+    }
+
+    public function getLocalizedTemplate($locale, $fallbackLocale = 'en')
+    {
+        $template = $this->localizedTemplates->matching(
+            Criteria::create()
+                ->where(Criteria::expr()->eq('locale', $locale))
+                ->orWhere(Criteria::expr()->eq('locale', $fallbackLocale))
+                // Order so $locale always ends up before $fallbackLocale
+                // If $locale is lexicographically after $fallbackLocale, sort DESC so it appears first
+                ->orderBy(['locale' => $locale>$fallbackLocale?'DESC':'ASC'])
+                ->setMaxResults(1)
+        )->first();
+
+        if($template)
+            return $template;
+        // Could not find preferred or fallback locale, just take the first template
+        return $this->localizedTemplates->first();
     }
 
 

@@ -6,19 +6,36 @@ admin:
 emailaddress:
     resource: '@AppBundle/Controller/EmailAddressController.php'
     type: rest
+    requirements:
+      emailAddress: '[0-9]+'
 
 emailtemplate:
     resource: '@AppBundle/Controller/EmailTemplateController.php'
     type: rest
+    requirements:
+      emailTemplate: '[0-9]+'
 
 localized_emailtemplate:
     resource: '@AppBundle/Controller/LocalizedEmailTemplateController.php'
     parent: emailtemplate
     type: rest
+    requirements:
+      emailTemplate: '[0-9]+'
+      localizedEmailTemplate: '[a-z]{2}'
 
 emailmessage:
     resource: '@AppBundle/Controller/EmailMessageController.php'
     type: rest
+    requirements:
+      message: '[0-9]+'
+
+emailmessagerecipients:
+    resource: '@AppBundle/Controller/EmailMessageRecipientController.php'
+    parent: emailmessage
+    type: rest
+    requirements:
+      message: '[0-9]+'
+      recipient: '[0-9]+'
 
 home:
     path: /

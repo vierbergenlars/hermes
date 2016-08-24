@@ -1,0 +1,33 @@
+{% extends 'AppBundle:EmailMessageRecipient:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailMessageRecipient.view.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessageRecipient.view.title'|trans({'%email%': message.sender.email}) }}</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
+            {# @var data \AppBundle\Entity\Email\Recipient #}
+            {% if data.__toString() starts with 'StandardRecipient' %}
+                {# @var data \AppBundle\Entity\Email\StandardRecipient #}
+                <dt>{{ 'label.name'|trans }}</dt><dd>{{ data.name }}</dd>
+            {% endif %}
+            <dt>{{ 'label.description'|trans }}</dt><dd>{{ data }} {% include 'AppBundle:EmailMessageRecipient:recipient_status.html.twig' with {recipient: data} only %}</dd>
+            {% if data.failed %}
+                <dt>{{ 'label.failedTime'|trans }}</dt><dd>{{ data.failedTime|date }}</dd>
+                {% if data.failureMessage %}
+                    <dt>{{ 'label.failureMessage'|trans }}</dt><dd>{{ data.failureMessage }}</dd>
+                {% endif %}
+            {% elseif data.queued %}
+                <dt>{{ 'label.queuedTime'|trans }}</dt><dd>{{ data.queuedTime|date }}</dd>
+            {% endif %}
+            {% if data.originatingRecipient %}
+                <dt>{{ 'label.originatingRecipient'|trans }}</dt>
+                <dd>
+                    <a href="{{ url('get_message_recipient', {message: message.id, recipient: data.originatingRecipient.id}) }}">
+                        {{ data.originatingRecipient }}
+                    </a>
+                </dd>
+            {% endif %}
+        </dl>
+    </div>
+{% endblock %}

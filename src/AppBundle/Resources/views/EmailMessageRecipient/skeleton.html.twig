@@ -1,0 +1,5 @@
+{% extends 'AppBundle::skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailMessageRecipient.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
+{% block sidebar %}
+    {% include 'AppBundle:EmailMessageRecipient:sidebar.html.twig' %}
+{% endblock %}

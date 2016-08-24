@@ -1,6 +1,5 @@
 {
-    "name": "lars/.checkout",
-    "license": "proprietary",
+    "license": "AGPL",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -11,11 +10,6 @@
             "app/AppCache.php"
         ]
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests/"
-        }
-    },
     "require": {
         "php": ">=5.5.9",
         "braincrafted/bootstrap-bundle": "^2.2",
@@ -25,8 +19,7 @@
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "doctrine/orm": "^2.5",
         "fortawesome/font-awesome": "^4.6",
-        "friendsofsymfony/rest-bundle": "^1.7",
-        "incenteev/composer-parameter-handler": "^2.0",
+        "friendsofsymfony/rest-bundle": "^2.0",
         "jms/serializer-bundle": "^1.1",
         "knplabs/knp-menu-bundle": "^2.1",
         "knplabs/knp-paginator-bundle": "^2.5",
@@ -42,25 +35,12 @@
         "t1st3/famfamfam-flags": "^0.5.1",
         "twbs/bootstrap": "^3.3",
         "vierbergenlars/authclient-bundle": "^0.5.0-alpha@dev",
-        "willdurand/hateoas-bundle": "^1.1"
+        "willdurand/hateoas-bundle": "^1.1",
+        "vierbergenlars/authserver-client": "~0.1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ],
-        "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
-        ]
     },
     "extra": {
         "symfony-app-dir": "app",
@@ -68,10 +48,7 @@
         "symfony-var-dir": "var",
         "symfony-web-dir": "web",
         "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        }
+        "symfony-assets-install": "relative"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

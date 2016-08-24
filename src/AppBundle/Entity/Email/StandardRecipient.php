@@ -42,6 +42,7 @@ class StandardRecipient extends Recipient
      * @var string
      *
      * @ORM\Column(name="emailaddress", type="string", length=255)
+     * @Assert\NotBlank()
      * @Assert\Length(max=255)
      * @Assert\Email()
      */
