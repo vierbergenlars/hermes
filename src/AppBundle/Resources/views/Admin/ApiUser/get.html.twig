@@ -13,9 +13,4 @@
             </dd>
         </dl>
     </div>
-    {{ render(controller('VlAclBundle:Acl:get', {req: app.request, object: user})) }}
-{% endblock %}
-{% block javascript %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/app/js/acl-modal.js') }}"></script>
 {% endblock %}

@@ -28,6 +28,7 @@ use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Routing\ClassResourceInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -38,6 +39,7 @@ use Symfony\Component\Security\Acl\Permission\MaskBuilder;
 /**
  * @View
  * @RouteResource("Apiuser")
+ * @Security("has_role('ROLE_ADMIN')")
  */
 class ApiUserController extends BaseController implements ClassResourceInterface
 {
@@ -52,7 +54,6 @@ class ApiUserController extends BaseController implements ClassResourceInterface
 
     public function getAction(ApiUser $user)
     {
-        $this->denyAccessUnlessGranted('VIEW', $user);
         return $user;
     }
 
@@ -61,7 +62,6 @@ class ApiUserController extends BaseController implements ClassResourceInterface
      */
     public function newAction()
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->createForm(ApiUserType::class, new ApiUser(), [
             'method' => 'POST',
             'action' => $this->generateUrl('admin_post_apiuser'),
@@ -87,7 +87,6 @@ class ApiUserController extends BaseController implements ClassResourceInterface
 
     public function editAction(ApiUser $user)
     {
-        $this->denyAccessUnlessGranted('EDIT', $user);
         return $this->createForm(ApiUserType::class, $user, [
             'method' => 'PUT',
             'action' => $this->generateUrl('admin_put_apiuser', ['user' => $user->getId()]),
@@ -129,7 +128,6 @@ class ApiUserController extends BaseController implements ClassResourceInterface
      */
     public function rotateAction(Request $request, ApiUser $user)
     {
-        $this->denyAccessUnlessGranted('EDIT', $user);
         $form = $this->rotateFormAction($user);
         $form->handleRequest($request);
         if(!$form->isValid()) {
@@ -144,7 +142,6 @@ class ApiUserController extends BaseController implements ClassResourceInterface
 
     public function removeAction(ApiUser $user)
     {
-        $this->denyAccessUnlessGranted('DELETE', $user);
         return $this->createFormBuilder()
             ->add('delete', SubmitType::class, [
                 'label' => 'admin.user.delete',
@@ -165,7 +162,6 @@ class ApiUserController extends BaseController implements ClassResourceInterface
         if($form->isValid()) {
             $this->getEntityManager()->remove($user);
             $this->getEntityManager()->flush();
-            $this->getAclProvider()->deleteSecurityIdentity(UserSecurityIdentity::fromAccount($user));
 
             return $this->redirectToRoute('admin_get_apiusers');
         }

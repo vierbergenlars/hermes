@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @UniqueEntity(fields={"username"})
  */
-class ApiUser extends User implements AutoAclInterface
+class ApiUser extends User
 {
     /**
      * @var string
@@ -80,12 +80,5 @@ class ApiUser extends User implements AutoAclInterface
     public function updatePassword()
     {
         $this->password = base_convert(bin2hex(openssl_random_pseudo_bytes(32)), 16, 36);
-    }
-
-    public function getAclConfig()
-    {
-        return [
-            'ROLE_ADMIN' => MaskBuilder::MASK_OPERATOR,
-        ];
     }
 }
