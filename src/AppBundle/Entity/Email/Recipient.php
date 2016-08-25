@@ -75,6 +75,13 @@ abstract class Recipient
     /**
      * @var \DateTime|null
      *
+     * @ORM\Column(name="sent_time", type="datetime", nullable=true)
+     */
+    private $sentTime;
+
+    /**
+     * @var \DateTime|null
+     *
      * @ORM\Column(name="failed_time", type="datetime", nullable=true)
      */
     private $failedTime;
@@ -146,6 +153,33 @@ abstract class Recipient
     public function setQueuedTime($queuedTime)
     {
         $this->queuedTime = $queuedTime;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSent()
+    {
+        return $this->sentTime !== null;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getSentTime()
+    {
+        return $this->sentTime;
+    }
+
+    /**
+     * @param \DateTime|null $sentTime
+     * @return Recipient
+     */
+    public function setSentTime($sentTime)
+    {
+        $this->sentTime = $sentTime;
+
         return $this;
     }
 

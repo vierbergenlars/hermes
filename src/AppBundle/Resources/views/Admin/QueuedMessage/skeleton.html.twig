@@ -1,0 +1,5 @@
+{% extends 'AppBundle::skeleton.html.twig' %}
+{% block title %}{{ 'admin.queuedmessage.title'|trans }} | {{ parent() }}{% endblock %}
+{% block sidebar %}
+    {% include 'AppBundle:Admin/QueuedMessage:sidebar.html.twig' %}
+{% endblock %}

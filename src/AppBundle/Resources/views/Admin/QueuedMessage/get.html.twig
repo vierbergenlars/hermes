@@ -1,0 +1,26 @@
+{% extends 'AppBundle:Admin/QueuedMessage:skeleton.html.twig' %}
+{% block title %}{{ 'admin.queuedmessage.view.title'|trans({'%id%': message.id, '%to%': message.toAddress, '%subject%': message.subject, '%from%': message.fromAddress}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('paper-plane-o') }} {{ 'admin.queuedmessage.view.title'|trans({'%id%': message.id, '%to%': message.toAddress, '%subject%': message.subject, '%from%': message.fromAddress}) }}</h3>
+    </div>
+    <div class="panel-body">
+        {# @var data \AppBundle\Entity\Email\QueuedMessage #}
+        <dl class="dl-horizontal">
+            <dt>{{ 'label.status'|trans }}</dt><dd>{% include 'AppBundle:Admin/QueuedMessage:message_status.html.twig' with {message: data} only %}</dd>
+            {% if data.sent %}
+                <dt>{{ 'label.sentTime'|trans }}</dt><dd>{{ data.sentAt|date }}</dd>
+            {% endif %}
+            {% if data.failed %}
+                <dt>{{ 'label.failedTime'|trans }}</dt><dd>{{ data.failedAt|date }}</dd>
+            {% endif %}
+        </dl>
+        <dl class="dl-horizontal">
+            <dt>Sender:</dt><dd>{{ data.sender }}</dd>
+            <dt>From:</dt><dd>{{ data.fromName }} &lt;{{ data.fromAddress }}&gt;</dd>
+            <dt>To:</dt><dd>{{ data.toName }} &lt;{{ data.toAddress }}&gt;</dd>
+            <dt>Subject:</dt><dd>{{ data.subject }}</dd>
+        </dl>
+        <pre>{{ data.body }}</pre>
+    </div>
+{% endblock %}

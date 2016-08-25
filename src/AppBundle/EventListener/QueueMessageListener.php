@@ -113,6 +113,7 @@ class QueueMessageListener implements EventSubscriberInterface
                 ->setSourceRecipient($recipient)
             ;
             $this->entityManager->persist($queuedMessage);
+            $recipient->setQueuedTime(new \DateTime());
         }
     }
 }

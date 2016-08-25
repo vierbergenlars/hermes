@@ -75,7 +75,7 @@ class DeliverMessagesCommand extends ContainerAwareCommand
                     throw new \RuntimeException('Mailtransport returned failure.');
 
                 $message->setSentAt(new \DateTime());
-                $message->getSourceRecipient()->setQueuedTime(new \DateTime());
+                $message->getSourceRecipient()->setSentTime(new \DateTime());
                 $output->writeln(sprintf('Message %s sent.', $message->getId()));
             } catch(\Exception $ex) {
                 $message->setFailedAt(new \DateTime());

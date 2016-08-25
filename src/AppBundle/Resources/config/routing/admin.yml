@@ -3,7 +3,14 @@ admin_apiuser:
     name_prefix: admin_
     type: rest
     requirements:
-      user: '[0-9]+'
+        user: '[0-9]+'
+
+admin_queuedmessage:
+    resource: '@AppBundle/Controller/Admin/QueuedMessageController.php'
+    name_prefix: admin_
+    type: rest
+    requirements:
+        message: '[0-9]+'
 
 
 vl_acl:

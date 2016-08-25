@@ -1,0 +1,54 @@
+{% extends 'AppBundle:Admin/QueuedMessage:skeleton.html.twig' %}
+{% block content %}
+    <div class="panel-heading clearfix">
+        {% include 'AppBundle::per_page_button.html.twig' %}
+        <h3 class="panel-title">{{ icon('paper-plane-o') }} {{ 'admin.queuedmessage.list.title'|trans }}</h3>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>{{ 'label.sender'|trans }}</th>
+                    <th>{{ 'label.recipient'|trans }}</th>
+                    <th>{{ 'label.subject'|trans }}</th>
+                    <th>{{ 'label.status'|trans }}</th>
+                    <th>{{ 'admin.actions'|trans }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in data %}
+                    {# @var obj \AppBundle\Entity\Email\QueuedMessage #}
+                    <tr>
+                        <td>
+                            {{ obj.fromName }} ({{ obj.fromAddress }})
+                        </td>
+                        <td>
+                            {{ obj.toName }} ({{ obj.toAddress }})
+                        </td>
+                        <td>
+                            {{ obj.subject }}
+                        </td>
+                        <td>
+                            {% include 'AppBundle:Admin/QueuedMessage:message_status.html.twig' with {message: obj} only %}
+                        </td>
+                        <td>
+                            {% spaceless %}
+                                <div class="btn-group btn-group-sm">
+                                    <a class="btn btn-info" href="{{ url('admin_get_queuedmessage', {message: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
+                                        {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
+                                    </a>
+                                    <a class="btn btn-danger {% if not is_granted('ROLE_ADMIN') or obj.sent %}disabled{% endif %}" href="{{ url('admin_remove_queuedmessage', {message: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                        {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
+                                    </a>
+                                </div>
+                            {% endspaceless %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-body text-center">
+        {{ knp_pagination_render(data, "", {"media_type": null}) }}
+    </div>
+{% endblock %}

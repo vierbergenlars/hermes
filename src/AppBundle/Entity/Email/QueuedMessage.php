@@ -120,6 +120,11 @@ class QueuedMessage
         return $this->id;
     }
 
+    public function isSent()
+    {
+        return $this->sentAt !== null;
+    }
+
     /**
      * Get sentAt
      *
@@ -142,6 +147,11 @@ class QueuedMessage
         $this->sentAt = $sentAt;
 
         return $this;
+    }
+
+    public function isFailed()
+    {
+        return $this->failedAt !== null;
     }
 
     /**
@@ -334,4 +344,5 @@ class QueuedMessage
             ->setSubject($this->getSubject())
             ->setBody($this->getBody());
     }
+
 }

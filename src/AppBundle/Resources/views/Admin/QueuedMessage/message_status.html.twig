@@ -1,0 +1,8 @@
+{# @var message \AppBundle\Entity\Email\QueuedMessage #}
+{% if message.failed %}
+    {{ label_danger('admin.queuedMessage.label.failed'|trans) }}
+{% elseif message.sent %}
+    {{ label_success('admin.queuedMessage.label.sent'|trans) }}
+{% else %}
+    {{ label_info('admin.queuedMessage.label.queued'|trans) }}
+{% endif %}

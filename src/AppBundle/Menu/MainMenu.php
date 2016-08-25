@@ -44,6 +44,11 @@ class MainMenu extends MenuItem
             'route' => 'new_message',
         ]);
 
+        $this->addChild('queued_messages', [
+            'label' => 'app.menu.queued_messages',
+            'route' => 'admin_get_queuedmessages',
+        ]);
+
         $config = $this->addChild('config', [
             'label' => 'app.menu.config'
         ]);
