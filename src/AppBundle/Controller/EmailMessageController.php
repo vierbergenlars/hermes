@@ -41,6 +41,7 @@ class EmailMessageController extends BaseController implements ClassResourceInte
         $queryBuilder = $this->getEntityManager()
             ->getRepository(Message::class)
             ->createQueryBuilder('m')
+            ->orderBy('m.id', 'DESC')
         ;
         return $this->paginate($queryBuilder, $request);
     }

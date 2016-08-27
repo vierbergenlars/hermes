@@ -41,6 +41,8 @@ class QueuedMessageController extends BaseController implements ClassResourceInt
         $queryBuilder = $this->getEntityManager()
             ->getRepository('AppBundle:Email\QueuedMessage')
             ->createQueryBuilder('m')
+            ->orderBy('m.sentAt', 'DESC')
+            ->orderBy('m.id', 'DESC')
         ;
         return $this->paginate($queryBuilder, $request);
     }
