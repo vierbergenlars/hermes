@@ -9,9 +9,8 @@
     <div class="list-group">
         {% if message is defined %}
             {{ self.render_link('admin_get_queuedmessage', {message: message.id}, 'eye', 'admin.navigation.view'|trans, is_granted('ROLE_ADMIN')) }}
-            {{ self.render_link('admin_remove_queuedmessage', {message: message.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('ROLE_ADMIN') and not message.sent) }}
+            {{ self.render_link('admin_remove_queuedmessage', {message: message.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('ROLE_ADMIN') and not message.sent and not message.failed) }}
         {% endif %}
         {{ self.render_link('admin_get_queuedmessages', {}, 'list', 'admin.navigation.list'|trans, true) }}
-        {{ self.render_link('admin_new_queuedmessage', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_ADMIN')) }}
     </div>
 </div>

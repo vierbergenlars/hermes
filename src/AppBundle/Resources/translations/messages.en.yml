@@ -8,6 +8,7 @@ app.menu.emailtemplates: '.icon-files-o Email templates'
 app.menu.config: '.icon-cog Configuration'
 app.menu.messages: '.icon-envelope-o Emails'
 app.menu.messages.new: '.icon-envelope-o New email'
+app.menu.queuedmessages: '.icon-paper-plane-o Message queue'
 
 # Navigation
 admin.navigation.title: Navigation
@@ -116,3 +117,20 @@ label.description: 'Description'
 label.failedTime: 'Failed at'
 label.failureMessage: 'Failure message'
 label.originatingRecipient: 'Originating recipient'
+
+# Message queue
+admin.queuedmessage.title: 'Queued messages'
+admin.queuedmessage.list.title: 'Message queue'
+admin.queuedmessage.view.title: 'Queued message: %subject% from %from% to %to%'
+admin.queuedmessage.delete.title: 'Cancel message: %subject% from %from% to %to%'
+admin.queuedmessage.delete: 'Cancel message'
+
+admin.queuedMessage.label.sent: 'Sent'
+admin.queuedMessage.label.failed: 'Failed'
+admin.queuedMessage.label.queued: 'Queued'
+
+label.recipient: 'Recipient'
+label.status: 'Status'
+label.sentTime: 'Sent at'
+
+

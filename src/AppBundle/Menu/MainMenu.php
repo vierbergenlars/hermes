@@ -31,7 +31,7 @@ class MainMenu extends MenuItem
      * MainMenu constructor.
      * @param FactoryInterface $factory
      */
-    public function __construct(FactoryInterface $factory)
+    public function __construct(FactoryInterface $factory, AuthorizationCheckerInterface $authorizationChecker)
     {
         parent::__construct('root', $factory);
 
@@ -44,10 +44,12 @@ class MainMenu extends MenuItem
             'route' => 'new_message',
         ]);
 
-        $this->addChild('queued_messages', [
-            'label' => 'app.menu.queued_messages',
-            'route' => 'admin_get_queuedmessages',
-        ]);
+        if($authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $this->addChild('queued_messages', [
+                'label' => 'app.menu.queuedmessages',
+                'route' => 'admin_get_queuedmessages',
+            ]);
+        }
 
         $config = $this->addChild('config', [
             'label' => 'app.menu.config'
@@ -60,10 +62,12 @@ class MainMenu extends MenuItem
             'label' => 'app.menu.emailtemplates',
             'route' => 'get_emailtemplates',
         ]);
-        $config->addChild('admin_apiusers', [
-            'label' => 'app.menu.apiusers',
-            'route' => 'admin_get_apiusers',
-        ]);
+        if($authorizationChecker->isGranted('ROLE_ADMIN')) {
+            $config->addChild('admin_apiusers', [
+                'label' => 'app.menu.apiusers',
+                'route' => 'admin_get_apiusers',
+            ]);
+        }
     }
 
 }

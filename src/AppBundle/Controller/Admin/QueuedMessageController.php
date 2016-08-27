@@ -50,41 +50,15 @@ class QueuedMessageController extends BaseController implements ClassResourceInt
         return $message;
     }
 
-    /**
-     * @return mixed
-     */
-    public function newAction()
-    {
-        return $this->createForm(QueuedMessageType::class, new QueuedMessage(), [
-            'method' => 'POST',
-            'action' => $this->generateUrl('admin_post_queuedmessage'),
-        ]);
-    }
-
-    /**
-     * @View("AppBundle:Admin/QueuedMessage:new.html.twig")
-     */
-    public function postAction(Request $request)
-    {
-        $form = $this->newAction();
-
-        $form->handleRequest($request);
-        if($form->isValid()) {
-            $this->getEntityManager()->persist($form->getData());
-            $this->getEntityManager()->flush();
-
-            return $this->redirectToRoute('admin_get_queuedmessage', ['message' => $form->getData()->getId()]);
-        }
-        return $form;
-    }
-
     public function removeAction(QueuedMessage $message)
     {
         if($message->isSent())
             throw $this->createAccessDeniedException('Message has already been sent.');
+        if($message->isFailed())
+            throw $this->createAccessDeniedException('Message is already failed.');
         return $this->createFormBuilder()
             ->add('delete', SubmitType::class, [
-                'label' => 'admin.message.delete',
+                'label' => 'admin.queuedmessage.delete',
                 'button_class' => 'danger'
             ])
             ->setMethod('DELETE')
@@ -103,7 +77,7 @@ class QueuedMessageController extends BaseController implements ClassResourceInt
             $message->setFailedAt(new \DateTime());
             if($message->getSourceRecipient()) {
                 $message->getSourceRecipient()->setFailedTime(new \DateTime());
-                $message->getSourceRecipient()->setFailureMessage(sprintf('Cancelled by %s', $this->getUser()->getUsername()));
+                $message->getSourceRecipient()->setFailureMessage(sprintf('Cancelled by user: %s', $this->getUser()->getUsername()));
             }
             $this->getEntityManager()->flush();
 

@@ -18,7 +18,9 @@
         <dl class="dl-horizontal">
             <dt>Sender:</dt><dd>{{ data.sender }}</dd>
             <dt>From:</dt><dd>{{ data.fromName }} &lt;{{ data.fromAddress }}&gt;</dd>
-            <dt>To:</dt><dd>{{ data.toName }} &lt;{{ data.toAddress }}&gt;</dd>
+            <dt>To:</dt><dd>
+                <a href="{{ url('get_message_recipient', {message: data.sourceRecipient.message.id, recipient: data.sourceRecipient.id}) }}">{{ data.toName }} &lt;{{ data.toAddress }}&gt;</a>
+            </dd>
             <dt>Subject:</dt><dd>{{ data.subject }}</dd>
         </dl>
         <pre>{{ data.body }}</pre>

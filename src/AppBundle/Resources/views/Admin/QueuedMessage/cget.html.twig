@@ -37,7 +37,7 @@
                                     <a class="btn btn-info" href="{{ url('admin_get_queuedmessage', {message: obj.id}) }}" title="{{ 'admin.navigation.view'|trans }}">
                                         {{ icon('eye') }}<span class="sr-only">{{ 'admin.navigation.view'|trans }}</span>
                                     </a>
-                                    <a class="btn btn-danger {% if not is_granted('ROLE_ADMIN') or obj.sent %}disabled{% endif %}" href="{{ url('admin_remove_queuedmessage', {message: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
+                                    <a class="btn btn-danger {% if not is_granted('ROLE_ADMIN') or obj.sent or obj.failed %}disabled{% endif %}" href="{{ url('admin_remove_queuedmessage', {message: obj.id}) }}" title="{{ 'admin.navigation.delete'|trans }}">
                                         {{ icon('trash-o') }}<span class="sr-only">{{ 'admin.navigation.delete'|trans }}</span>
                                     </a>
                                 </div>

@@ -22,6 +22,7 @@
     <services>
         <service class="AppBundle\Menu\MainMenu">
             <argument type="service" id="knp_menu.factory" />
+            <argument type="service" id="security.authorization_checker" />
             <tag name="knp_menu.menu" alias="main" />
         </service>
         <service class="AppBundle\EventListener\CloneViewAnnotationListener">
