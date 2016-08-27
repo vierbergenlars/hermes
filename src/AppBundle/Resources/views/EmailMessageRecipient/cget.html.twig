@@ -3,7 +3,7 @@
     <div class="panel-heading clearfix">
         {% include 'AppBundle::per_page_button.html.twig' %}
         {% if recipient is not defined %}
-            <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessageRecipient.list.title'|trans({'%email%': message.sender.email}) }}</h3>
+            <h3 class="panel-title">{{ icon('at') }} {{ 'admin.emailMessageRecipient.list.title'|trans({'%email%': message.sender.email}) }}</h3>
         {% else %}
             <h3 class="panel-title">{{ icon('code-fork') }} {{ 'admin.emailMessageRecipient.children.title'|trans({'%recipient%': recipient, '%email%': message.sender.email}) }}</h3>
         {% endif %}
