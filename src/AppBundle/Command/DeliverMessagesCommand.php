@@ -70,7 +70,7 @@ class DeliverMessagesCommand extends ContainerAwareCommand
             /* @var $message QueuedMessage */
             try {
                 $sendMessage = new SendMessageEvent($message);
-                $eventDispatcher->dispatch('hermes.send_message', $sendMessage);
+                $eventDispatcher->dispatch(SendMessageEvent::EVENT_NAME, $sendMessage);
                 if($mailer->send($sendMessage->getSwiftMessage()) !== 1)
                     throw new \RuntimeException('Mailtransport returned failure.');
 

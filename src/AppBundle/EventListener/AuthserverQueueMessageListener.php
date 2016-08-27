@@ -24,6 +24,7 @@ use AppBundle\Entity\Email\AuthserverRecipient;
 use AppBundle\Entity\Email\GroupRecipient;
 use AppBundle\Entity\Email\StandardRecipient;
 use AppBundle\Event\QueueMessageEvent;
+use AppBundle\Event\SendMessageEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Debug\Exception\ContextErrorException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -52,7 +53,7 @@ class AuthserverQueueMessageListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'hermes.queue_message' => 'safeQueueMessage',
+            QueueMessageEvent::EVENT_NAME => 'safeQueueMessage',
         ];
     }
 

@@ -56,7 +56,7 @@ class QueueMessageListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'hermes.queue_message' => 'safeQueueMessage',
+            QueueMessageEvent::EVENT_NAME => 'safeQueueMessage',
         ];
     }
 

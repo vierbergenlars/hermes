@@ -66,7 +66,7 @@ class QueueMessagesCommand extends ContainerAwareCommand
             try {
                 foreach ($message->getRecipients() as $recipient) {
                     /* @var $recipient Recipient */
-                    $eventDispatcher->dispatch('hermes.queue_message', new QueueMessageEvent($message, $recipient, ['message' => $message]));
+                    $eventDispatcher->dispatch(QueueMessageEvent::EVENT_NAME, new QueueMessageEvent($message, $recipient, ['message' => $message]));
                 }
                 $message->setQueuedTime(new \DateTime());
                 $this->removeEditAcls($message);

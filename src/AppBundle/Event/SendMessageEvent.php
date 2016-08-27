@@ -27,6 +27,7 @@ use Symfony\Component\EventDispatcher\Event;
 
 class SendMessageEvent extends Event
 {
+    const EVENT_NAME = 'hermes.send_message';
     /**
      * @var QueuedMessage
      */
