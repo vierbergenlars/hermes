@@ -24,6 +24,7 @@ use AppBundle\Entity\Email\Message;
 use AppBundle\Entity\Email\MessageRepository;
 use AppBundle\Entity\Email\Recipient;
 use AppBundle\Event\QueueMessageEvent;
+use AppBundle\Event\UpdateRecipientsEvent;
 use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

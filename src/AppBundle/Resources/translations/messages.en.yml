@@ -109,6 +109,7 @@ admin.emailMessageRecipient.type.groupRecipient: 'Authserver group recipients'
 
 admin.emailMessageRecipient.label.failed: 'Failed'
 admin.emailMessageRecipient.label.queued: 'Queued'
+admin.emailMessageRecipient.label.sent: 'Sent'
 
 admin.navigation.backToMessage: 'Back to message'
 admin.navigation.recipientChildren: 'Resolved recipients'

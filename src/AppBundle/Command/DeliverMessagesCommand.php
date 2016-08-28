@@ -27,6 +27,7 @@ use AppBundle\Entity\Email\QueuedMessageRepository;
 use AppBundle\Entity\Email\Recipient;
 use AppBundle\Event\QueueMessageEvent;
 use AppBundle\Event\SendMessageEvent;
+use AppBundle\Event\UpdateRecipientsEvent;
 use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -83,6 +84,7 @@ class DeliverMessagesCommand extends ContainerAwareCommand
                 $message->getSourceRecipient()->setFailureMessage($ex->getMessage());
                 $output->writeln(sprintf('<error>Message %d could not be sent: %s</error>', $message->getId(), $ex->__toString()), OutputInterface::VERBOSITY_QUIET);
             }
+            $eventDispatcher->dispatch(UpdateRecipientsEvent::EVENT_NAME, new UpdateRecipientsEvent($message->getSourceRecipient()));
             $em->flush();
         }
     }

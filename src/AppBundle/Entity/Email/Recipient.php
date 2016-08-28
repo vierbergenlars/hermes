@@ -21,6 +21,7 @@
 namespace AppBundle\Entity\Email;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Selectable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\VarDumper\VarDumper;
 
@@ -248,7 +249,7 @@ abstract class Recipient
     }
 
     /**
-     * @return Recipient[]|Collection
+     * @return Recipient[]|Collection|Selectable
      */
     public function getChildRecipients()
     {
