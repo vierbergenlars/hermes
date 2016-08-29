@@ -27,11 +27,12 @@ class QueuedMessageRepository extends EntityRepository
     /**
      * @return QueuedMessage[]
      */
-    public function findSendableMessages()
+    public function findSendableMessages($limit)
     {
         return $this->createQueryBuilder('message')
             ->where('message.sentAt IS NULL')
             ->andWhere('message.failedAt IS NULL')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
     }

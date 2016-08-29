@@ -32,6 +32,7 @@ use AppBundle\Security\Acl\Permission\MaskBuilder;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
@@ -49,6 +50,7 @@ class DeliverMessagesCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:deliver-messages')
+            ->addOption('limit', 'l', InputOption::VALUE_REQUIRED, 'Maximum number of mails to send during this run.')
         ;
     }
 
@@ -65,7 +67,7 @@ class DeliverMessagesCommand extends ContainerAwareCommand
         /* @var $eventDispatcher EventDispatcher */
         $mailer = $this->getContainer()->get('swiftmailer.mailer');
         /* @var $mailer \Swift_Mailer */
-        $messages = $repo->findSendableMessages();
+        $messages = $repo->findSendableMessages($input->getOption('limit'));
 
         foreach($messages as $message) {
             /* @var $message QueuedMessage */
@@ -77,12 +79,12 @@ class DeliverMessagesCommand extends ContainerAwareCommand
 
                 $message->setSentAt(new \DateTime());
                 $message->getSourceRecipient()->setSentTime(new \DateTime());
-                $output->writeln(sprintf('Message %s sent.', $message->getId()));
+                $output->writeln(sprintf('Message queue id %s sent.', $message->getId()));
             } catch(\Exception $ex) {
                 $message->setFailedAt(new \DateTime());
                 $message->getSourceRecipient()->setFailedTime(new \DateTime());
                 $message->getSourceRecipient()->setFailureMessage($ex->getMessage());
-                $output->writeln(sprintf('<error>Message %d could not be sent: %s</error>', $message->getId(), $ex->__toString()), OutputInterface::VERBOSITY_QUIET);
+                $output->writeln(sprintf('<error>Message queue id %d could not be sent: %s</error>', $message->getId(), $ex->__toString()), OutputInterface::VERBOSITY_QUIET);
             }
             $eventDispatcher->dispatch(UpdateRecipientsEvent::EVENT_NAME, new UpdateRecipientsEvent($message->getSourceRecipient()));
             $em->flush();
