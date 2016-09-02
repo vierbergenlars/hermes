@@ -27,6 +27,7 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -113,6 +114,9 @@ class EmailMessageController extends BaseController implements ClassResourceInte
         $form = $this->createFormBuilder($message)
             ->add('scheduledSendTime', DateTimeType::class, [
                 'label' => 'label.scheduledSendTime',
+            ])
+            ->add('priority', IntegerType::class, [
+                'label' => 'label.priority',
             ])
             ->add('submit', SubmitType::class, ['label' => 'form.submit'])
             ->getForm();

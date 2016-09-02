@@ -103,10 +103,19 @@ class Message implements AutoAclInterface
      */
     private $sentTime;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="priority", type="integer")
+     * @Assert\GreaterThan(0)
+     */
+    private $priority;
+
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
         $this->templateData = [];
+        $this->priority = 1;
     }
 
     /**
@@ -328,5 +337,24 @@ class Message implements AutoAclInterface
     public function isQueued()
     {
         return $this->queuedTime !== null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param int $priority
+     * @return Message
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
     }
 }

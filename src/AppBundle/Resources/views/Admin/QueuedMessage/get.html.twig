@@ -7,6 +7,7 @@
     <div class="panel-body">
         {# @var data \AppBundle\Entity\Email\QueuedMessage #}
         <dl class="dl-horizontal">
+            <dt>{{ 'label.priority'|trans }}</dt><dd>{{ data.priority }}</dd>
             <dt>{{ 'label.status'|trans }}</dt><dd>{% include 'AppBundle:Admin/QueuedMessage:message_status.html.twig' with {message: data} only %}</dd>
             {% if data.sent %}
                 <dt>{{ 'label.sentTime'|trans }}</dt><dd>{{ data.sentAt|date }}</dd>

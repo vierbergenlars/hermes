@@ -106,6 +106,7 @@ class QueueMessageListener implements EventSubscriberInterface
                 ->setSender($event->getMessage()->getSender()->getEmail())
                 ->setFromAddress($event->getMessage()->getSender()->getEmail())
                 ->setFromName($event->getMessage()->getSender()->getName())
+                ->setPriority($event->getMessage()->getPriority())
                 ->setToAddress($recipient->getEmailaddress())
                 ->setToName($recipient->getName())
                 ->setSubject($subject)

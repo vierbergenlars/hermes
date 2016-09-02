@@ -19,6 +19,7 @@
                     {{ label_danger('admin.emailMessage.label.unscheduled'|trans) }}
                 {% endif %}
             </dd>
+            <dt>{{ 'label.priority'|trans }}</dt><dd>{{ message.priority }}</dd>
             {% if message.sentTime %}
                 <dt>{{ 'label.sentTime'|trans }}</dt><dd>{{ message.sentTime|date }}</dd>
             {% elseif message.queued %}

@@ -111,6 +111,13 @@ class QueuedMessage
     private $failedAt;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="priority", type="integer")
+     */
+    private $priority;
+
+    /**
      * Get id
      *
      * @return integer
@@ -329,6 +336,25 @@ class QueuedMessage
     public function setBody($body)
     {
         $this->body = $body;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param int $priority
+     * @return QueuedMessage
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
         return $this;
     }
 

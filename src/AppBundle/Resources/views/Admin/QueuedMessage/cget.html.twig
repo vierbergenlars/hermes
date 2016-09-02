@@ -11,6 +11,7 @@
                     <th>{{ 'label.sender'|trans }}</th>
                     <th>{{ 'label.recipient'|trans }}</th>
                     <th>{{ 'label.subject'|trans }}</th>
+                    <th>{{ 'label.priority'|trans }}</th>
                     <th>{{ 'label.status'|trans }}</th>
                     <th>{{ 'admin.actions'|trans }}</th>
                 </tr>
@@ -27,6 +28,9 @@
                         </td>
                         <td>
                             {{ obj.subject }}
+                        </td>
+                        <td>
+                            {{ obj.priority }}
                         </td>
                         <td>
                             {% include 'AppBundle:Admin/QueuedMessage:message_status.html.twig' with {message: obj} only %}

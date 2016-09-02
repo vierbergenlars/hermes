@@ -90,6 +90,7 @@ label.transport: 'Transport'
 label.recipients: 'Recipients'
 label.template.create_new: 'Create new template'
 label.queuedTime: 'Queued at'
+label.priority: 'Priority'
 
 # Email message recipients
 
