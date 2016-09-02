@@ -93,6 +93,8 @@ class QueueMessageListener implements EventSubscriberInterface
                 $bodyTemplate = $this->twig->createTemplate($bodyTemplateStr);
             } else {
                 $localizedTemplate = $event->getMessage()->getTemplate()->getLocalizedTemplates()->first();
+                if(!$localizedTemplate)
+                    throw new \RuntimeException('No templates available for this message.');
                 /* @var $localizedTemplate LocalizedEmailTemplate */
                 $subjectTemplate = $this->twig->createTemplate($localizedTemplate->getSubject());
                 $bodyTemplate = $this->twig->createTemplate($localizedTemplate->getBody());
