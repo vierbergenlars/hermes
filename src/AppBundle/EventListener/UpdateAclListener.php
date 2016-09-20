@@ -67,7 +67,7 @@ class UpdateAclListener implements EventSubscriber
     {
         return [
             Events::postPersist,
-            Events::postRemove,
+            Events::preRemove,
         ];
     }
 
@@ -97,7 +97,7 @@ class UpdateAclListener implements EventSubscriber
 
     }
 
-    public function postRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();
         if($entity instanceof AutoAclInterface) {
