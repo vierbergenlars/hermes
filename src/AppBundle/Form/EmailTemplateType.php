@@ -20,9 +20,12 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\EmailAddress;
 use AppBundle\Entity\EmailTemplate;
+use AppBundle\Form\FilteredEntityType\UseGrantedOnlyFilteredEntityType;
 use Braincrafted\Bundle\BootstrapBundle\Form\Type\BootstrapCollectionType;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
@@ -35,7 +38,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EmailTemplateType extends AbstractType
 {
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -45,6 +47,18 @@ class EmailTemplateType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'label.name',
+            ])
+            ->add('sender', UseGrantedOnlyFilteredEntityType::class, [
+                'label' => 'label.sender',
+                'class' => EmailAddress::class,
+                'query_builder' => function(EntityRepository $repository) {
+                    return $repository->createQueryBuilder('e')
+                        ->where('e.authCode IS NULL');
+                },
+                'choice_label' => function(EmailAddress $emailAddress) {
+                    return sprintf('%s (%s)', $emailAddress->getName(), $emailAddress->getEmail());
+                },
+                'required' => false,
             ])
             ->add('localizedTemplates', BootstrapCollectionType::class, [
                 'label' => 'label.templates',
@@ -60,7 +74,7 @@ class EmailTemplateType extends AbstractType
             ])
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

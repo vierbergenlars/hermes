@@ -98,7 +98,7 @@ abstract class Recipient
      * Recipient constructor.
      * @param Message $message
      */
-    public function __construct(Message $message)
+    public function __construct(Message $message = null)
     {
         $this->message = $message;
     }

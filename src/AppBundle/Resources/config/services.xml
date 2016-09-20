@@ -52,6 +52,10 @@
             </argument>
             <tag name="form.type" />
         </service>
+        <service class="AppBundle\Security\EmailTemplateWithSenderVoter">
+            <argument type="service" id="security.acl.voter.basic_permissions" />
+            <tag name="security.voter" />
+        </service>
         <service class="AppBundle\Form\Email\MessageType">
             <argument type="service" id="security.authorization_checker"/>
             <tag name="form.type" />

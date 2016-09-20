@@ -1,6 +1,7 @@
 form.submit: Verzenden
 admin.actions: Acties
 admin.items_per_page: 'Items per pagina'
+label.none: (Leeg)
 
 # Navigation
 admin.navigation.title: Navigatie

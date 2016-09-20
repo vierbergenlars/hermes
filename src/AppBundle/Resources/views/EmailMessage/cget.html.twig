@@ -16,7 +16,7 @@
             <tbody>
                 {% for obj in data %}
                     <tr>
-                        <td>{{ obj.sender.name }} ({{ obj.sender.email }})</td>
+                        <td>{{ obj.sender }}</td>
                         <td>
                             {% if obj.scheduled %}
                                 {{ obj.scheduledSendTime|date }}

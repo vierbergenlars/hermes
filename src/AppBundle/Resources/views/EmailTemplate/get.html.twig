@@ -5,6 +5,22 @@
     <div class="panel-heading">
         <h3 class="panel-title">{{ icon('files-o') }} {{ 'admin.emailTemplate.view.title'|trans({'%name%': emailTemplate.name}) }}</h3>
     </div>
+    {% if not inline %}
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <dt>{{ 'label.sender'|trans }}</dt>
+                <dd>
+                    {% if emailTemplate.sender %}
+                        <a href="{{ url('get_emailaddress', {emailAddress: emailTemplate.sender.id}) }}">
+                            {{ icon('envelope') }} {{ emailTemplate.sender }}
+                        </a>
+                    {% else %}
+                        <span class="text-muted">{{ 'label.none'|trans }}</span>
+                    {% endif %}
+                </dd>
+            </dl>
+        </div>
+    {% endif %}
     {{ render(controller('AppBundle:LocalizedEmailTemplate:cget', {
         _inline_: true,
         emailTemplate: emailTemplate,

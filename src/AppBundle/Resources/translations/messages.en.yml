@@ -9,6 +9,7 @@ app.menu.config: '.icon-cog Configuration'
 app.menu.messages: '.icon-envelope-o Emails'
 app.menu.messages.new: '.icon-envelope-o New email'
 app.menu.queuedmessages: '.icon-paper-plane-o Message queue'
+label.none: (None)
 
 # Navigation
 admin.navigation.title: Navigation

@@ -58,10 +58,15 @@ class MessageType extends AbstractType
         $builder
             ->add('sender', UseGrantedOnlyFilteredEntityType::class, [
                 'class' => EmailAddress::class,
+                'query_builder' => function(EntityRepository $repository) {
+                    return $repository->createQueryBuilder('e')
+                        ->where('e.authCode IS NULL');
+                },
                 'choice_label' => function(EmailAddress $emailAddress) {
                     return sprintf('%s (%s)', $emailAddress->getName(), $emailAddress->getEmail());
                 },
                 'label' => 'label.sender',
+                'required' => false,
             ])
             ->add('template', FormType::class, [
                 'label' => 'label.template',
@@ -100,8 +105,9 @@ class MessageType extends AbstractType
         $builder->get('template')->get('opt_2')->add('name', HiddenType::class, [
             'data' => '__inline__'.base_convert(bin2hex(openssl_random_pseudo_bytes(32)), 16, 36),
         ]);
+        $builder->get('template')->get('opt_2')->remove('sender');
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

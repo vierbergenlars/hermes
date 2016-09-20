@@ -1,8 +1,8 @@
 {% extends 'AppBundle:EmailAddress:skeleton.html.twig' %}
-{% block title %}{{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress.email}) }} | {{ parent() }}{% endblock %}
+{% block title %}{{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress}) }} | {{ parent() }}{% endblock %}
 {% block content %}
     <div class="panel-heading">
-        <h3 class="panel-title">{{ icon('envelope') }} {{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress.email}) }}</h3>
+        <h3 class="panel-title">{{ icon('envelope') }} {{ 'admin.emailAddress.view.title'|trans({'%email%': emailAddress}) }}</h3>
     </div>
     <div class="panel-body">
         <dl class="dl-horizontal">

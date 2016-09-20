@@ -7,7 +7,12 @@
     <div class="panel-body">
         <dl class="dl-horizontal">
             {# @var message \AppBundle\Entity\Email\Message #}
-            <dt>{{ 'label.sender'|trans }}</dt><dd>{{ message.sender.name }} ({{ message.sender.email }})</dd>
+            <dt>{{ 'label.sender'|trans }}</dt>
+            <dd>
+                <a href="{{ url('get_emailaddress', {emailAddress: message.sender.id}) }}">
+                    {{ icon('envelope') }} {{ message.sender }}
+                </a>
+            </dd>
             {% if not (message.template.name starts with '__inline__') %}
                 <dt>{{ 'label.template'|trans }}</dt><dd><a href="{{ url('get_emailtemplate', {'emailTemplate': message.template.id}) }}">{{ icon('files-o fa-fw') }} {{ message.template.name }}</a></dd>
             {% endif %}

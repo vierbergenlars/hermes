@@ -2,6 +2,9 @@ security:
     encoders:
         AppBundle\Entity\ApiUser: plaintext
 
+    access_decision_manager:
+        strategy: unanimous
+
     acl:
         connection: default
         voter:

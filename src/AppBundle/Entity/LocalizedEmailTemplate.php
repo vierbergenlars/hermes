@@ -46,6 +46,7 @@ class LocalizedEmailTemplate
      * @var EmailTemplate
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EmailTemplate", inversedBy="localizedTemplates")
+     * @Assert\Valid()
      */
     private $template;
 

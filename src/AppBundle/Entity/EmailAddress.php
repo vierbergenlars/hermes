@@ -176,5 +176,10 @@ class EmailAddress implements AutoAclInterface
             'ROLE_ADMIN' => MaskBuilder::MASK_OWNER,
         ];
     }
+
+    public function __toString()
+    {
+        return sprintf('%s <%s>', $this->name, $this->email);
+    }
 }
 

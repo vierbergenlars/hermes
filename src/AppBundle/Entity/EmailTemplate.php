@@ -56,10 +56,19 @@ class EmailTemplate implements AutoAclInterface
     private $name;
 
     /**
+     * @var EmailAddress|null
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EmailAddress", cascade={"remove", "persist"})
+     * @Assert\Valid()
+     */
+    private $sender;
+
+    /**
      * @var LocalizedEmailTemplate[]
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\LocalizedEmailTemplate", mappedBy="template", cascade={"remove", "persist"}, orphanRemoval=true)
      * @Assert\Valid()
+     * @Assert\NotNull()
      * @Assert\Count(min=1)
      */
     private $localizedTemplates;
@@ -105,6 +114,32 @@ class EmailTemplate implements AutoAclInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getNameIfNotInline()
+    {
+        if(strpos($this->name, '__inline__') !== 0)
+            return $this->name;
+        return null;
+    }
+
+    /**
+     * @return EmailAddress|null
+     */
+    public function getSender()
+    {
+        return $this->sender;
+    }
+
+    /**
+     * @param EmailAddress|null $sender
+     * @return EmailTemplate
+     */
+    public function setSender($sender)
+    {
+        $this->sender = $sender;
+
+        return $this;
     }
 
     /**
@@ -165,8 +200,6 @@ class EmailTemplate implements AutoAclInterface
             self::CURRENT_USER => MaskBuilder::MASK_MASTER,
             'ROLE_ADMIN' => MaskBuilder::MASK_OWNER,
         ];
-        if(strncmp($this->getName(), '__inline__', 10) !== 0)
-            $config['ROLE_USER'] = MaskBuilder::MASK_USE;
         return $config;
     }
 }

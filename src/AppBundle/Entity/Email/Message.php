@@ -52,7 +52,7 @@ class Message implements AutoAclInterface
      * @var EmailAddress
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EmailAddress")
-     * @Assert\NotNull()
+     * @Assert\Expression("value or (this.getTemplate() and this.getTemplate().getSender())", message="A sender is required to be present, either in the template or in the message.")
      * @Assert\Valid()
      */
     private $sender;
@@ -77,7 +77,7 @@ class Message implements AutoAclInterface
     /**
      * @var Recipient[]
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Email\Recipient", mappedBy="message")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Email\Recipient", mappedBy="message", cascade={"persist"})
      * @Assert\Valid()
      */
     private $recipients;
@@ -86,6 +86,7 @@ class Message implements AutoAclInterface
      * @var \DateTime
      *
      * @ORM\Column(name="scheduled_send_time", type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     private $scheduledSendTime;
 
@@ -93,6 +94,7 @@ class Message implements AutoAclInterface
      * @var \DateTime
      *
      * @ORM\Column(name="queued_time", type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     private $queuedTime;
 
@@ -100,6 +102,7 @@ class Message implements AutoAclInterface
      * @var \DateTime
      *
      * @ORM\Column(name="sent_time", type="datetime", nullable=true)
+     * @Assert\DateTime()
      */
     private $sentTime;
 
@@ -107,6 +110,7 @@ class Message implements AutoAclInterface
      * @var int
      *
      * @ORM\Column(name="priority", type="integer")
+     * @Assert\NotBlank()
      * @Assert\GreaterThan(0)
      */
     private $priority;
@@ -139,7 +143,7 @@ class Message implements AutoAclInterface
     }
 
     /**
-     * @param \DateTime $scheduledSendTime
+     * @param \DateTime|\DateTimeImmutable $scheduledSendTime
      * @return Message
      */
     public function setScheduledSendTime($scheduledSendTime)
@@ -225,11 +229,15 @@ class Message implements AutoAclInterface
     /**
      * Get sender
      *
-     * @return \AppBundle\Entity\EmailAddress
+     * @return \AppBundle\Entity\EmailAddress|null
      */
     public function getSender()
     {
-        return $this->sender;
+        if($this->sender)
+            return $this->sender;
+        if($this->getTemplate())
+            return $this->getTemplate()->getSender();
+        return null;
     }
 
     /**
@@ -239,7 +247,7 @@ class Message implements AutoAclInterface
      *
      * @return Message
      */
-    public function setTemplate(\AppBundle\Entity\EmailTemplate $template = null)
+    public function setTemplate(\AppBundle\Entity\EmailTemplate $template)
     {
         $this->template = $template;
 
@@ -266,6 +274,7 @@ class Message implements AutoAclInterface
     public function addRecipient(\AppBundle\Entity\Email\Recipient $recipient)
     {
         $this->recipients[] = $recipient;
+        $recipient->setMessage($this);
 
         return $this;
     }
