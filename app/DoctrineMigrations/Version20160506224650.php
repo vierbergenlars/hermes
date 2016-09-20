@@ -35,7 +35,8 @@ class Version20160506224650 extends AbstractMigration
     {
         $localizedTemplate = $schema->getTable('localized_email_template');
         $localizedTemplate->dropPrimaryKey();
-        $localizedTemplate->addColumn('id', 'integer')->setColumnDefinition('INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
+        $localizedTemplate->addColumn('id', 'integer')->setNotnull(true)->setAutoincrement(true);
+        $localizedTemplate->setPrimaryKey(['id']);
     }
 
     /**
