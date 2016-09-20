@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hermes, an HTTP-based templated mail sender for transactional and mass mailing.
+  ~
+  ~ Copyright (C) 2016  Lars Vierbergen
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<serializer>
+    <class name="AppBundle\Entity\EmailTemplate" exclusion-policy="ALL" xml-root-name="template" xmlns:h="https://github.com/willdurand/Hateoas">
+        <property name="name" expose="true" access-type="public_method" accessor-getter="getNameIfNotInline" xml-attribute="true" />
+        <!-- <virtual-property method="getNameIfNotInline" expose="true" serialized-name="name" xml-attribute="true" /> -->
+        <property name="sender" expose="true" groups="template_object" />
+        <property name="localizedTemplates" expose="true" serialized-name="translations" groups="template_object">
+            <xml-list inline="true" entry-name="translation" />
+        </property>
+        <h:relation rel="self">
+            <h:href route="api_get_template" absolute="true">
+                <h:parameter name="template" value="expr(object.getId())" />
+            </h:href>
+        </h:relation>
+        <h:relation rel="translations">
+            <h:href route="api_post_template_translation" absolute="true">
+                <h:parameter name="template" value="expr(object.getId())" />
+            </h:href>
+        </h:relation>
+        <h:relation rel="send">
+            <h:href route="api_post_template_message" absolute="true">
+                <h:parameter name="template" value="expr(object.getId())" />
+            </h:href>
+            <h:exclusion groups="template" />
+        </h:relation>
+    </class>
+</serializer>

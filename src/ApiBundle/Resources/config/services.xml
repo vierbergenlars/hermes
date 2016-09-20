@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" ?>
 <!--
   ~ Hermes, an HTTP-based templated mail sender for transactional and mass mailing.
   ~
@@ -18,12 +18,14 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<serializer>
-     <class name="Knp\Component\Pager\Pagination\AbstractPagination" exclusion-policy="ALL">
-        <property name="items" expose="true">
-            <xml-list inline="true" />
-        </property>
-        <property name="totalCount" xml-attribute="true" serialized-name="total" expose="true" />
-        <property name="currentPageNumber" xml-attribute="true" serialized-name="page" expose="true" />
-    </class>
-</serializer>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service class="ApiBundle\EventListener\ExceptionListener">
+            <argument type="service" id="fos_rest.view_handler" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+        <service class="ApiBundle\Serializer\ArrayObjectHandler">
+            <tag name="jms_serializer.subscribing_handler" />
+        </service>
+    </services>
+</container>

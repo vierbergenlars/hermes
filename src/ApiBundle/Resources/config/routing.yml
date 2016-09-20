@@ -1,0 +1,26 @@
+api_sender:
+    resource: "@ApiBundle/Controller/SenderController.php"
+    type: rest
+    name_prefix: api_
+
+api_message:
+    resource: "@ApiBundle/Controller/MessageController.php"
+    type: rest
+    name_prefix: api_
+
+api_recipient:
+    resource: "@ApiBundle/Controller/RecipientController.php"
+    type: rest
+    name_prefix: api_
+    parent: api_message
+
+api_template:
+    resource: "@ApiBundle/Controller/TemplateController.php"
+    type: rest
+    name_prefix: api_
+
+api_translation:
+    resource: "@ApiBundle/Controller/TranslationController.php"
+    type: rest
+    name_prefix: api_
+    parent: api_template

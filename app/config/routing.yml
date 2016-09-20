@@ -1,3 +1,8 @@
+api:
+    resource: "@ApiBundle/Resources/config/routing.yml"
+    type:     rest
+    prefix:   /api
+
 login:
     path: /login
     defaults:

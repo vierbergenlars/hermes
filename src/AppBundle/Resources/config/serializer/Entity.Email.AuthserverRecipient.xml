@@ -17,16 +17,8 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <serializer>
-    <class name="Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination" exclusion-policy="ALL" xmlns:h="https://github.com/willdurand/Hateoas">
-        <h:relation rel="prev">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() - 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber() &lt;= 1)" />
-        </h:relation>
-        <h:relation rel="next">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() + 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber()*object.getItemNumberPerPage() &gt;= object.getTotalItemCount())" />
-        </h:relation>
+    <class name="AppBundle\Entity\Email\AuthserverRecipient" exclusion-policy="ALL" xml-root-name="recipient" xmlns:h="https://github.com/willdurand/Hateoas">
+        <property name="userId" expose="true" serialized-name="user-guid" type="string" />
     </class>
 </serializer>

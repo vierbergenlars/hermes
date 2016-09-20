@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Hermes, an HTTP-based templated mail sender for transactional and mass mailing.
+  ~
+  ~ Copyright (C) 2016  Lars Vierbergen
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU Affero General Public License as
+  ~ published by the Free Software Foundation, either version 3 of the
+  ~ License, or (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU Affero General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Affero General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<serializer>
+    <class name="AppBundle\Entity\Email\Message" exclusion-policy="ALL" xml-root-name="message" xmlns:h="https://github.com/willdurand/Hateoas">
+        <property name="sender" expose="true" access-type="public_method" groups="Default" />
+        <property name="template" expose="true" groups="Default" />
+        <property name="templateData" expose="true" serialized-name="template-data" groups="message_object" />
+        <property name="priority" expose="true" xml-attribute="true" groups="Default,message_send" />
+        <property name="scheduledSendTime" expose="true" serialized-name="send-at" xml-attribute="true" groups="Default,message_send" />
+        <h:relation rel="self">
+            <h:href route="api_get_message" absolute="true">
+                <h:parameter name="message" value="expr(object.getId())" />
+            </h:href>
+        </h:relation>
+        <h:relation rel="recipients">
+            <h:href route="api_get_message_recipients" absolute="true">
+                <h:parameter name="message" value="expr(object.getId())" />
+            </h:href>
+        </h:relation>
+    </class>
+</serializer>

@@ -19,14 +19,7 @@
   -->
 
 <serializer>
-    <class name="Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination" exclusion-policy="ALL" xmlns:h="https://github.com/willdurand/Hateoas">
-        <h:relation rel="prev">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() - 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber() &lt;= 1)" />
-        </h:relation>
-        <h:relation rel="next">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() + 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber()*object.getItemNumberPerPage() &gt;= object.getTotalItemCount())" />
-        </h:relation>
+    <class name="Symfony\Component\HttpKernel\Exception\HttpException" exclusion-policy="ALL">
+        <property name="statusCode" expose="true" serialized-name="code" />
     </class>
 </serializer>

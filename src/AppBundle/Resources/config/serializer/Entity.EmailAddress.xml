@@ -17,16 +17,14 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <serializer>
-    <class name="Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination" exclusion-policy="ALL" xmlns:h="https://github.com/willdurand/Hateoas">
-        <h:relation rel="prev">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() - 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber() &lt;= 1)" />
-        </h:relation>
-        <h:relation rel="next">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() + 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber()*object.getItemNumberPerPage() &gt;= object.getTotalItemCount())" />
+    <class name="AppBundle\Entity\EmailAddress" exclusion-policy="ALL" xml-root-name="sender" xmlns:h="https://github.com/willdurand/Hateoas">
+        <property name="name" expose="true" xml-attribute="true" />
+        <property name="email" expose="true" xml-attribute="true" />
+        <h:relation rel="self">
+            <h:href route="api_get_sender" absolute="true">
+                <h:parameter name="sender" value="expr(object.getId())" />
+            </h:href>
         </h:relation>
     </class>
 </serializer>

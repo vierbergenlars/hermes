@@ -17,16 +17,16 @@
   ~ You should have received a copy of the GNU Affero General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <serializer>
-    <class name="Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination" exclusion-policy="ALL" xmlns:h="https://github.com/willdurand/Hateoas">
-        <h:relation rel="prev">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() - 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber() &lt;= 1)" />
-        </h:relation>
-        <h:relation rel="next">
-            <h:href uri="expr(service('router').generate(object.getRoute(), object.getQuery({media_type: null, page: object.getCurrentPageNumber() + 1})))" />
-            <h:exclusion exclude-if="expr(object.getCurrentPageNumber()*object.getItemNumberPerPage() &gt;= object.getTotalItemCount())" />
+    <class name="AppBundle\Entity\LocalizedEmailTemplate" exclusion-policy="ALL" xml-root-name="localized-template" xmlns:h="https://github.com/willdurand/Hateoas">
+        <property name="locale" expose="true" xml-attribute="true" />
+        <property name="subject" groups="template,translation" expose="true" />
+        <property name="body" groups="template,translation" expose="true" />
+        <h:relation rel="self">
+            <h:href route="api_get_template_translation" absolute="true">
+                <h:parameter name="template" value="expr(object.getTemplate().getId())" />
+                <h:parameter name="locale" value="expr(object.getLocale())" />
+            </h:href>
         </h:relation>
     </class>
 </serializer>
