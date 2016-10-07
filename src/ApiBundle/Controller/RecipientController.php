@@ -71,5 +71,10 @@ class RecipientController extends BaseController implements ClassResourceInterfa
         $recipient = $this->deserializeRequest($request, Recipient::class);
         $message->addRecipient($recipient);
         $this->getEntityManager()->flush();
+
+        return $this->routeRedirectView('api_get_message_recipient', [
+            'message' => $message->getId(),
+            'recipient' => $recipient->getId(),
+        ]);
     }
 }
