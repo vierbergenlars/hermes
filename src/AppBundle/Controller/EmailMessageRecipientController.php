@@ -162,4 +162,83 @@ class EmailMessageRecipientController extends BaseController implements ClassRes
         }
         return $form;
     }
+
+    /**
+     * @Post("/messages/recipients/autocomplete/users")
+     */
+    public function getAutocompleteUsersAction(Request $request)
+    {
+        $authserverClient = $this->get('authserver.client');
+        /* @var $authserverClient \vierbergenlars\Authserver\Client\AuthserverAdminClient */
+        $searchTerm = $request->request->get('query');
+        $allUsers = new \AppendIterator();
+        $allNameUsers = $authserverClient->getUsers([
+            'name' => '%'.$searchTerm.'%',
+        ]);
+        $allUsers->append($allNameUsers);
+
+        if($allNameUsers->count() < 10) {
+            $allUserNameUsers = $authserverClient->getUsers([
+                'username' => '%'.$searchTerm.'%',
+            ]);
+            $allUsers->append($allUserNameUsers);
+        }
+
+        $userData = [];
+        $i = 0;
+
+        foreach($allUsers as $user) {
+            if($i++ > 10)
+                break;
+            /* @var $user \vierbergenlars\Authserver\Client\Model\User */
+            if(isset($userData[$user->getGuid()]))
+                $i--;
+            $userData[$user->getGuid()] = [
+                'id' => $user->getGuid(),
+                'value' => sprintf('%s (%s)', $user->getDisplayName(), $user->getUsername()),
+            ];
+        }
+
+        return array_values($userData);
+    }
+
+    /**
+     * @Post("/messages/recipients/autocomplete/groups")
+     */
+    public function getAutocompleteGroupsAction(Request $request)
+    {
+        $authserverClient = $this->get('authserver.client');
+        /* @var $authserverClient \vierbergenlars\Authserver\Client\AuthserverAdminClient */
+        $searchTerm = $request->request->get('query');
+        $allGroups = new \AppendIterator();
+
+        $allTechGroups = $authserverClient->getGroups([
+            'techname' => '%'.$searchTerm.'%',
+        ]);
+        $allGroups->append($allTechGroups);
+
+        if($allTechGroups->count() < 10) {
+            $allNameGroups = $authserverClient->getGroups([
+                'name' => '%'.$searchTerm.'%',
+            ]);
+            $allGroups->append($allNameGroups);
+        }
+
+        $groupData = [];
+        $i=0;
+
+        foreach($allGroups as $group) {
+            if($i++ > 10)
+                break;
+            /* @var $group \vierbergenlars\Authserver\Client\Model\Group */
+            if(isset($groupData[$group->getName()]))
+                $i--;
+            $groupData[$group->getName()] = [
+                'id' => $group->getName(),
+                'value' => sprintf('%s (%s)', $group->getDisplayName(), $group->getName()),
+            ];
+        }
+
+        return array_values($groupData);
+    }
 }

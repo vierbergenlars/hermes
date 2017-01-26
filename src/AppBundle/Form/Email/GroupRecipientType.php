@@ -20,6 +20,7 @@
 
 namespace AppBundle\Form\Email;
 
+use Lifo\TypeaheadBundle\Form\Type\TypeaheadType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,10 +34,16 @@ class GroupRecipientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('groupName')
+            ->add('groupName', TypeaheadType::class, [
+                'route' => 'get_message_recipient_autocomplete_groups',
+                'route_params' => [
+                    '_format' => 'json'
+                ],
+                'render' => 'techname',
+            ])
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

@@ -20,6 +20,7 @@
 
 namespace AppBundle\Form\Email;
 
+use Lifo\TypeaheadBundle\Form\Type\TypeaheadType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,10 +34,16 @@ class AuthserverRecipientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('userId')
+            ->add('userId', TypeaheadType::class, [
+                'route' => 'get_message_recipient_autocomplete_users',
+                'route_params' => [
+                    '_format' => 'json'
+                ],
+                'render' => 'guid',
+            ])
         ;
     }
-    
+
     /**
      * @param OptionsResolver $resolver
      */

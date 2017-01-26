@@ -36,7 +36,8 @@
         "twbs/bootstrap": "^3.3",
         "vierbergenlars/authclient-bundle": "^0.5.0-alpha@dev",
         "willdurand/hateoas-bundle": "^1.1",
-        "vierbergenlars/authserver-client": "~0.1.1"
+        "vierbergenlars/authserver-client": "^0.1.2",
+        "lifo/typeahead-bundle": "^2.4"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

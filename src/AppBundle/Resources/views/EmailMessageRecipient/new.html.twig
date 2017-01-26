@@ -1,4 +1,10 @@
 {% extends 'AppBundle:EmailMessageRecipient:skeleton.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    {% stylesheets filter='cssrewrite' '@lifo_typeahead_css' %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
 {% block title %}{{ 'admin.emailMessageRecipient.new.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
 {% block content %}
     <div class="panel-heading">
@@ -25,4 +31,10 @@
             {% endfor %}
         </div>
     </div>
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    {% javascripts '@lifo_typeahead_js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}
