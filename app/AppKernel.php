@@ -42,6 +42,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Lifo\TypeaheadBundle\LifoTypeaheadBundle(),
             new vierbergenlars\Bundle\AuthClientBundle\VlAuthClientBundle(),
 
             new AppBundle\AppBundle(),
