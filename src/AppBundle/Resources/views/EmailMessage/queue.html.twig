@@ -2,9 +2,10 @@
 {% block title %}{{ 'admin.emailMessage.queue.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
 {% block content %}
     <div class="panel-heading">
-        <h3 class="panel-title">{{ icon('envelope-o') }} {{ 'admin.emailMessage.queue.title'|trans({'%email%': message.sender.email}) }}</h3>
+        <h3 class="panel-title">{{ icon('paper-plane-o') }} {{ 'admin.emailMessage.queue.title'|trans({'%email%': message.sender.email}) }}</h3>
     </div>
     <div class="panel-body">
+        {{ 'admin.emailMessage.queue.description'|trans|raw }}
         {{ form(form) }}
     </div>
 {% endblock %}
