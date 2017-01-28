@@ -12,6 +12,7 @@
             {{ self.render_link('edit_message', {message: message.id}, 'pencil', 'admin.navigation.edit'|trans, is_granted('EDIT', message)) }}
             {{ self.render_link('remove_message', {message: message.id}, 'trash', 'admin.navigation.delete'|trans, is_granted('DELETE', message)) }}
             {{ self.render_link('queue_message', {message: message.id}, 'paper-plane-o', 'admin.navigation.queueMessage'|trans, is_granted('EDIT', message) and not message.queued) }}
+            {{ self.render_link('testdeliver_message', {message: message.id}, 'paper-plane', 'admin.navigation.testdeliver'|trans, is_granted('VIEW', message)) }}
         {% endif %}
         {{ self.render_link('get_messages', {}, 'list', 'admin.navigation.list'|trans, true) }}
         {{ self.render_link('new_message', {}, 'plus', 'admin.navigation.new'|trans, is_granted('ROLE_USER')) }}
