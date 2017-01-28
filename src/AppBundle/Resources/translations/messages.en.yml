@@ -79,10 +79,14 @@ admin.emailMessage.edit.title: 'Edit message from %email%'
 admin.emailMessage.new.title: 'New email message'
 admin.emailMessage.delete.title: 'Delete message from %email%'
 admin.emailMessage.queue.title: 'Queue message for sending from %email%'
+admin.emailMessage.testdeliver.title: 'Send test message from %email%'
 admin.emailMessage.delete: 'Delete email message'
 admin.emailMessage.label.unscheduled: 'Unscheduled'
 
+admin.emailMessage.testdeliver.description: 'A test message will be sent to your primary email address.'
+
 admin.navigation.queueMessage: 'Queue message for sending'
+admin.navigation.testdeliver: 'Send test message'
 
 admin.emailMessage.queue.description: '<div class="alert alert-info">After queueing, your message will be sent as soon as a delivery slot is available.<br>You will not be able to edit your message after queueing has started.</div>'
 
@@ -94,6 +98,8 @@ label.recipients: 'Recipients'
 label.template.create_new: 'Create new template'
 label.queuedTime: 'Queued at'
 label.priority: 'Priority'
+
+flash.emailMessage.testDeliveryQueued: 'Your test message has been queued for delivery.'
 
 # Email message recipients
 

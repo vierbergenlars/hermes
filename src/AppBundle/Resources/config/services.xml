@@ -91,6 +91,9 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <tag name="kernel.event_subscriber" />
         </service>
+        <service class="AppBundle\EventListener\SkipAlreadyQueuedQueueMessageListener">
+            <tag name="kernel.event_subscriber" />
+        </service>
         <service class="AppBundle\EventListener\UpdateRecipientsListener">
             <tag name="kernel.event_subscriber" />
         </service>

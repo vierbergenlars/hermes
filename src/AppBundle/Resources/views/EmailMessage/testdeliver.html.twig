@@ -1,0 +1,11 @@
+{% extends 'AppBundle:EmailMessage:skeleton.html.twig' %}
+{% block title %}{{ 'admin.emailMessage.testdeliver.title'|trans({'%email%': message.sender.email}) }} | {{ parent() }}{% endblock %}
+{% block content %}
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ icon('paper-plane') }} {{ 'admin.emailMessage.testdeliver.title'|trans({'%email%': message.sender.email}) }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ 'admin.emailMessage.testdeliver.description'|trans|raw }}
+        {{ form(form) }}
+    </div>
+{% endblock %}
