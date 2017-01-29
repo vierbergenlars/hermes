@@ -68,7 +68,7 @@ class TemplateController extends BaseController implements ClassResourceInterfac
     public function postAction(Request $request)
     {
         $deserializationContext = DeserializationContext::create()
-            ->setGroups(['Default', 'template', 'template_object', 'translation']);
+            ->setGroups(['Default', 'template', 'template_object', 'template_POST']);
         $em = $this->getEntityManager();
         $template = $this->deserializeRequest($request, EmailTemplate::class, $deserializationContext,
             function(EmailTemplate $template, ConstraintViolationListInterface $errors) use($em) {

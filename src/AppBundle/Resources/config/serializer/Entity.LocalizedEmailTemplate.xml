@@ -21,7 +21,7 @@
     <class name="AppBundle\Entity\LocalizedEmailTemplate" exclusion-policy="ALL" xml-root-name="localized-template" xmlns:h="https://github.com/willdurand/Hateoas">
         <property name="locale" expose="true" xml-attribute="true" />
         <property name="subject" groups="message_POST,template,translation" expose="true" />
-        <property name="body" groups="message_POST,translation" expose="true" />
+        <property name="body" groups="message_POST,template_POST,translation" expose="true" />
         <h:relation rel="self">
             <h:href route="api_get_template_translation" absolute="true">
                 <h:parameter name="template" value="expr(object.getTemplate().getId())" />
