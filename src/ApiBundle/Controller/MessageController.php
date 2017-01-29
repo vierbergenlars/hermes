@@ -53,7 +53,7 @@ class MessageController extends BaseController implements ClassResourceInterface
     public function postAction(Request $request)
     {
         $deserializationContext = DeserializationContext::create()
-            ->setGroups(['Default', 'message', 'message_object', 'template', 'template_object']);
+            ->setGroups(['Default', 'message', 'message_object', 'message_POST']);
         $em = $this->getEntityManager();
         $message = $this->deserializeRequest($request, Message::class, $deserializationContext, function(Message $message, ConstraintViolationListInterface $errors) use ($em) {
             if($message->getSender()) {
@@ -70,20 +70,20 @@ class MessageController extends BaseController implements ClassResourceInterface
                         'sender',
                         null
                     ));
-                    return;
+                } else {
+                    if(!$this->isGranted('USE', $sender)) {
+                        $errors->add(new ConstraintViolation(
+                            'Permission denied to use sender: ' . $sender->getEmail(),
+                            'Permission denied to use sender: {sender}',
+                            ['sender' => $sender->getEmail()],
+                            $message,
+                            'sender',
+                            null
+                        ));
+                    } else {
+                        $message->setSender($sender);
+                    }
                 }
-                if(!$this->isGranted('USE', $sender)) {
-                    $errors->add(new ConstraintViolation(
-                        'Permission denied to use sender: '.$sender->getEmail(),
-                        'Permission denied to use sender: {sender}',
-                        ['sender' => $sender->getEmail()],
-                        $message,
-                        'sender',
-                        null
-                    ));
-                    return;
-                }
-                $message->setSender($sender);
             }
             if($message->getTemplate()) {
                 $message->getTemplate()->setName('__inline__'.base_convert(bin2hex(openssl_random_pseudo_bytes(32)), 16, 36));

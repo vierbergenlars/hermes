@@ -147,7 +147,6 @@ class TemplateControllerTest extends WebTestCase
                 [
                     'locale' => 'en',
                     'subject' => 'Accessible template subject',
-                    'body' => 'Accessible template body {{ var }}',
                     '_links' => [
                         'self' => [
                             'href' => 'http://localhost/api/templates/1/translations/en',
@@ -159,6 +158,21 @@ class TemplateControllerTest extends WebTestCase
                 'self' => ['href' => 'http://localhost/api/templates/1'],
                 'translations' => ['href' => 'http://localhost/api/templates/1/translations'],
                 'send' => ['href' => 'http://localhost/api/templates/1/messages']
+            ]
+        ]), $this->client->getResponse()->getContent());
+
+        $this->client->request('GET', json_decode($this->client->getResponse()->getContent())->translations[0]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale' => 'en',
+            'subject' => 'Accessible template subject',
+            'body' => 'Accessible template body {{ var }}',
+            '_links' => [
+                'self' => [
+                    'href' => 'http://localhost/api/templates/1/translations/en',
+                ]
             ]
         ]), $this->client->getResponse()->getContent());
     }
@@ -182,7 +196,6 @@ class TemplateControllerTest extends WebTestCase
                 [
                     'locale' => 'en',
                     'subject' => 'Email linked subject',
-                    'body' => 'Email linked body',
                     '_links' => [
                         'self' => [
                             'href' => 'http://localhost/api/templates/3/translations/en',
@@ -196,6 +209,21 @@ class TemplateControllerTest extends WebTestCase
                 'send' => ['href' => 'http://localhost/api/templates/3/messages']
             ]
 
+        ]), $this->client->getResponse()->getContent());
+
+        $this->client->request('GET', json_decode($this->client->getResponse()->getContent())->translations[0]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale' => 'en',
+            'subject' => 'Email linked subject',
+            'body' => 'Email linked body',
+            '_links' => [
+                'self' => [
+                    'href' => 'http://localhost/api/templates/3/translations/en',
+                ]
+            ]
         ]), $this->client->getResponse()->getContent());
     }
 
@@ -242,13 +270,13 @@ class TemplateControllerTest extends WebTestCase
 
         self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
+        $getBody = $this->client->getResponse()->getContent();
         self::assertJsonStringEqualsJsonString(json_encode([
             'name' => 'new_template',
             'translations' => [
                 [
                     'locale' => 'en',
                     'subject' => 'New template subject',
-                    'body' => 'New template body',
                     '_links' => [
                         'self' => ['href' => 'http://localhost/api/templates/4/translations/en' ]
                     ]
@@ -256,7 +284,6 @@ class TemplateControllerTest extends WebTestCase
                 [
                     'locale' => 'nl',
                     'subject' => 'Nieuwe template onderwerp',
-                    'body' => 'Nieuwe template body',
                     '_links' => [
                         'self' => ['href' => 'http://localhost/api/templates/4/translations/nl' ]
                     ]
@@ -268,8 +295,33 @@ class TemplateControllerTest extends WebTestCase
                 'send' => ['href' => 'http://localhost/api/templates/4/messages']
             ]
 
+        ]), $getBody);
+
+        $this->client->request('GET', json_decode($getBody)->translations[0]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale' => 'en',
+            'subject' => 'New template subject',
+            'body' => 'New template body',
+            '_links' => [
+                'self' => ['href' => 'http://localhost/api/templates/4/translations/en' ]
+            ]
         ]), $this->client->getResponse()->getContent());
 
+        $this->client->request('GET', json_decode($getBody)->translations[1]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale' => 'nl',
+            'subject' => 'Nieuwe template onderwerp',
+            'body' => 'Nieuwe template body',
+            '_links' => [
+                'self' => ['href' => 'http://localhost/api/templates/4/translations/nl' ]
+            ]
+        ]), $this->client->getResponse()->getContent());
     }
 
     public function testPostWithSender()
@@ -300,6 +352,8 @@ class TemplateControllerTest extends WebTestCase
 
         self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
 
+        $getBody = $this->client->getResponse()->getContent();
+
         self::assertJsonStringEqualsJsonString(json_encode([
             'name' => 'new_template',
             'sender' => [
@@ -313,7 +367,6 @@ class TemplateControllerTest extends WebTestCase
                 [
                     'locale' => 'en',
                     'subject' => 'New template subject',
-                    'body' => 'New template body',
                     '_links' => [
                         'self' => ['href' => 'http://localhost/api/templates/4/translations/en' ]
                     ]
@@ -321,7 +374,6 @@ class TemplateControllerTest extends WebTestCase
                 [
                     'locale' => 'nl',
                     'subject' => 'Nieuwe template onderwerp',
-                    'body' => 'Nieuwe template body',
                     '_links' => [
                         'self' => ['href' => 'http://localhost/api/templates/4/translations/nl' ]
                     ]
@@ -333,6 +385,32 @@ class TemplateControllerTest extends WebTestCase
                 'send' => ['href' => 'http://localhost/api/templates/4/messages']
             ]
 
+        ]), $getBody);
+
+        $this->client->request('GET', json_decode($getBody)->translations[0]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale' => 'en',
+            'subject' => 'New template subject',
+            'body' => 'New template body',
+            '_links' => [
+                'self' => ['href' => 'http://localhost/api/templates/4/translations/en' ]
+            ]
+        ]), $this->client->getResponse()->getContent());
+
+        $this->client->request('GET', json_decode($getBody)->translations[1]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale' => 'nl',
+            'subject' => 'Nieuwe template onderwerp',
+            'body' => 'Nieuwe template body',
+            '_links' => [
+                'self' => ['href' => 'http://localhost/api/templates/4/translations/nl' ]
+            ]
         ]), $this->client->getResponse()->getContent());
     }
 

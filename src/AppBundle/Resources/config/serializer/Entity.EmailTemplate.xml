@@ -22,7 +22,7 @@
         <property name="name" expose="true" access-type="public_method" accessor-getter="getNameIfNotInline" xml-attribute="true" />
         <!-- <virtual-property method="getNameIfNotInline" expose="true" serialized-name="name" xml-attribute="true" /> -->
         <property name="sender" expose="true" groups="template_object" />
-        <property name="localizedTemplates" expose="true" serialized-name="translations" groups="template_object">
+        <property name="localizedTemplates" expose="true" serialized-name="translations" groups="message_POST,template_object">
             <xml-list inline="true" entry-name="translation" />
         </property>
         <h:relation rel="self">

@@ -212,7 +212,6 @@ class MessageControllerTest extends WebTestCase
                 [
                     'locale'  => 'en',
                     'subject' => 'Inline subject',
-                    'body'    => 'Inline body',
                     '_links'  => [
                         'self' => ['href' => 'http://localhost/api/templates/4/translations/en'],
                     ],
@@ -225,6 +224,21 @@ class MessageControllerTest extends WebTestCase
             ],
 
         ]), $this->client->getResponse()->getContent());
+
+
+        $this->client->request('GET', json_decode($this->client->getResponse()->getContent())->translations[0]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale'  => 'en',
+            'subject' => 'Inline subject',
+            'body'    => 'Inline body',
+            '_links'  => [
+                'self' => ['href' => 'http://localhost/api/templates/4/translations/en'],
+            ],
+        ]), $this->client->getResponse()->getContent());
+
 
     }
 
@@ -282,7 +296,6 @@ class MessageControllerTest extends WebTestCase
                 [
                     'locale'  => 'en',
                     'subject' => 'Inline subject',
-                    'body'    => 'Inline body',
                     '_links'  => [
                         'self' => ['href' => 'http://localhost/api/templates/4/translations/en'],
                     ],
@@ -296,6 +309,18 @@ class MessageControllerTest extends WebTestCase
 
         ]), $this->client->getResponse()->getContent());
 
+        $this->client->request('GET', json_decode($this->client->getResponse()->getContent())->translations[0]->_links->self->href);
+
+        self::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+
+        self::assertJsonStringEqualsJsonString(json_encode([
+            'locale'  => 'en',
+            'subject' => 'Inline subject',
+            'body'    => 'Inline body',
+            '_links'  => [
+                'self' => ['href' => 'http://localhost/api/templates/4/translations/en'],
+            ],
+        ]), $this->client->getResponse()->getContent());
     }
 
     public function testPostWithInaccessibleSender()
