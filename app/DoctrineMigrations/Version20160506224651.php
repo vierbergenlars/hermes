@@ -26,7 +26,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20160506224650 extends AbstractMigration
+class Version20160506224651 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -34,9 +34,7 @@ class Version20160506224650 extends AbstractMigration
     public function up(Schema $schema)
     {
         $localizedTemplate = $schema->getTable('localized_email_template');
-        $localizedTemplate->dropPrimaryKey();
-        $localizedTemplate->addColumn('id', 'integer')->setNotnull(true);
-        $localizedTemplate->setPrimaryKey(['id']);
+        $localizedTemplate->getColumn('id')->setAutoincrement(true);
     }
 
     /**
@@ -45,7 +43,6 @@ class Version20160506224650 extends AbstractMigration
     public function down(Schema $schema)
     {
         $localizedTemplate = $schema->getTable('localized_email_template');
-        $localizedTemplate->dropColumn('id');
-        $localizedTemplate->setPrimaryKey(['template_id', 'locale']);
+        $localizedTemplate->getColumn('id')->setAutoincrement(false);
     }
 }
